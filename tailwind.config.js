@@ -8,7 +8,13 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        default: ['var(--font-inter)'],
+        default: ['var(--font-encode)'],
+        prosto: ['var(--font-prosto)'],
+        lily: ['var(--font-lily)'],
+      },
+      colors: {
+        primary: '#051726',
+        secondary: '#81ffd9',
       },
     },
   },

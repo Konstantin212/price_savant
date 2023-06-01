@@ -1,14 +1,41 @@
 import './globals.css'
-import { Inter } from 'next/font/google'
+import { Encode_Sans, Lily_Script_One, Prosto_One } from 'next/font/google'
+import { Metadata } from 'next'
 
-export const metadata = {
-  title: 'Vercel Postgres Demo with Prisma',
+export const metadata: Metadata = {
+  title: 'Price Savant - Compare Grocery Prices',
+  authors: [{ name: 'Kostiantyn Prykhodko', url: 'https: kprykhodko.com' }],
+  robots: 'index, follow',
   description:
-    'A simple Next.js app with Vercel Postgres as the database and Prisma as the ORM',
+    'Price Savant - Compare prices for groceries and find the best deals.',
+  keywords:
+    'price comparison, grocery prices, compare prices, best deals, grocery shopping',
+  openGraph: {
+    title: 'Price Savant - Compare Grocery Prices',
+    description:
+      'Find the best deals and compare prices for groceries on Price Savant.',
+    // TODO: add image url
+    url: 'http:price-savant.com',
+  },
 }
 
-const inter = Inter({
-  variable: '--font-inter',
+const prosto = Prosto_One({
+  weight: '400',
+  variable: '--font-prosto',
+  subsets: ['latin'],
+  display: 'swap',
+})
+
+const lily = Lily_Script_One({
+  weight: '400',
+  variable: '--font-lily',
+  subsets: ['latin'],
+  display: 'swap',
+})
+
+const encode = Encode_Sans({
+  weight: ['100', '400', '600'],
+  variable: '--font-encode',
   subsets: ['latin'],
   display: 'swap',
 })
@@ -19,8 +46,12 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={inter.variable}>{children}</body>
+    <html lang='en'>
+      <body
+        className={`${prosto.variable} ${encode.variable} ${lily.variable} font-default`}
+      >
+        {children}
+      </body>
     </html>
   )
 }
