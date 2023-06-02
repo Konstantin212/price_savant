@@ -7,7 +7,13 @@ interface Props {
   children: React.ReactElement
 }
 
-const tabButtons = [
+interface TabButtons {
+  id: number
+  type: 'button' | 'submit' | 'reset' | undefined
+  title: string
+}
+
+const tabButtons: TabButtons[] = [
   { id: 1, type: 'button', title: 'My Products' },
   { id: 2, type: 'button', title: 'My Shops' },
   { id: 3, type: 'button', title: 'My Categories' },
