@@ -34,6 +34,7 @@
     "typescript": "5.0.4"
   },
   "devDependencies": {
+    "@tailwindcss/aspect-ratio": "^0.4.2",
     "@types/ms": "^0.7.31",
     "eslint-config-prettier": "^8.8.0",
     "prettier": "^2.8.8",

@@ -5,6 +5,7 @@ import Table from '@/components/table'
 import TablePlaceholder from '@/components/table-placeholder'
 import ExpandingArrow from '@/components/expanding-arrow'
 import Header from '@/components/Header'
+import Main from '@/components/Main'
 
 export const runtime = 'edge'
 export const preferredRegion = 'home'
@@ -14,6 +15,7 @@ export default async function Home() {
   return (
     <>
       <Header />
+      <Main />
       <main className='relative flex min-h-screen flex-col items-center justify-center'>
         <Link
           href='https://vercel.com/templates/next.js/postgres-starter'
