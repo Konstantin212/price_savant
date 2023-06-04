@@ -2,7 +2,7 @@ import React from 'react'
 
 interface Props {
   handleTabClick(id: number): (event: React.MouseEvent) => void
-  activeTab: number
+  activeTabId: number
   itemsCounter: { [key: number]: number }
   children: React.ReactElement
 }
@@ -19,7 +19,12 @@ const tabButtons: TabButtons[] = [
   { id: 3, type: 'button', title: 'My Categories' },
 ]
 
-const Tabs = ({ handleTabClick, activeTab, itemsCounter, children }: Props) => {
+const Tabs = ({
+  handleTabClick,
+  activeTabId,
+  itemsCounter,
+  children,
+}: Props) => {
   return (
     <div>
       <div className='border-b border-b-gray-200'>
@@ -30,7 +35,7 @@ const Tabs = ({ handleTabClick, activeTab, itemsCounter, children }: Props) => {
                 onClick={handleTabClick(id)}
                 type={type}
                 className={`mx-auto flex items-center justify-center gap-2 px-1 py-3 transition ${
-                  activeTab === id
+                  activeTabId === id
                     ? 'relative text-blue-700 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:bg-blue-700 hover:text-blue-700'
                     : 'text-gray-500 hover:text-blue-700'
                 }`}

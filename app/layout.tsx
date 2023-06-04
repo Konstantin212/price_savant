@@ -1,6 +1,7 @@
 import './globals.css'
 import { Encode_Sans, Lily_Script_One, Prosto_One } from 'next/font/google'
 import { Metadata } from 'next'
+import Header from '@/components/Header'
 
 export const metadata: Metadata = {
   title: 'Price Savant - Compare Grocery Prices',
@@ -50,6 +51,7 @@ export default function RootLayout({
       <body
         className={`${prosto.variable} ${encode.variable} ${lily.variable} font-default`}
       >
+        <Header />
         {children}
       </body>
     </html>

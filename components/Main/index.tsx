@@ -11,7 +11,7 @@ const itemsCounter = {
 }
 
 const Main = () => {
-  const [activeTab, setActiveTab] = useState(1)
+  const [activeTabId, setActiveTab] = useState(1)
 
   const handleTabClick = (id: number) => () => {
     setActiveTab(id)
@@ -21,11 +21,11 @@ const Main = () => {
     <div>
       <Tabs
         handleTabClick={handleTabClick}
-        activeTab={activeTab}
+        activeTabId={activeTabId}
         itemsCounter={itemsCounter}
       >
         <div className='container mx-auto'>
-          <TabContent activeTab={activeTab} />
+          <TabContent activeTabId={activeTabId} />
         </div>
       </Tabs>
     </div>

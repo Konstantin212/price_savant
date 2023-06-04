@@ -1,42 +1,28 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import TabCard from '@/components/Tabs/TabCard'
+import { data } from '@/mock/productData'
+import { ProductData } from '@/mock/products'
+import FloatingActionButton from '@/components/FloatingActionButton'
 
 interface Props {
-  activeTab: number
+  activeTabId: number
 }
 
-export interface Shop {
-  id: number
-  name: string
-  image: string
-  price: number
+const getTabData = (itemId: number) => {
+  return data[itemId]
 }
 
-const shopList: Shop[] = [
-  {
-    id: 1,
-    name: 'Kaufland',
-    image:
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Kaufland_Logo.svg/1200px-Kaufland_Logo.svg.png',
-    price: 75,
-  },
-  {
-    id: 2,
-    name: 'Aldi',
-    image:
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Aldi_Nord_201x_logo.svg/1200px-Aldi_Nord_201x_logo.svg.png',
-    price: 95,
-  },
-]
+const TabContent = ({ activeTabId }: Props) => {
+  const [tabData, setData] = useState<ProductData[]>([])
 
-const sortedShopList = shopList.sort((a, b) => a.price - b.price)
+  useEffect(() => {
+    getTabData(activeTabId).then((productData) => setData(productData))
+  }, [activeTabId])
 
-const TabContent = ({ activeTab }: Props) => {
-  console.log('activeTab')
-  console.log(activeTab)
   return (
-    <div className='my-10'>
-      <TabCard title='Lemon' shopList={sortedShopList} />
+    <div className='my-10 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'>
+      <TabCard tabData={tabData} />
+      <FloatingActionButton />
     </div>
   )
 }

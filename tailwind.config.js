@@ -13,8 +13,8 @@ module.exports = {
         lily: ['var(--font-lily)'],
       },
       colors: {
-        primary: '#051726',
-        secondary: '#81ffd9',
+        primary: { DEFAULT: '#051726', light: 'rgba(5,23,38,0.59)' },
+        secondary: { DEFAULT: '#81ffd9', dark: '#4ecba5' },
       },
     },
   },
