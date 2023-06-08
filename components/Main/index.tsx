@@ -3,6 +3,7 @@
 import React, { useState } from 'react'
 import Tabs from '@/components/Tabs'
 import TabContent from '@/components/Tabs/TabContent'
+import { ToastContainer } from 'react-toastify'
 
 const itemsCounter = {
   1: 6,
@@ -28,6 +29,18 @@ const Main = () => {
           <TabContent activeTabId={activeTabId} />
         </div>
       </Tabs>
+      <ToastContainer
+        position='top-right'
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme='light'
+      />
     </div>
   )
 }

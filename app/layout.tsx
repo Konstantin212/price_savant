@@ -1,7 +1,9 @@
-import './globals.css'
+import React from 'react'
 import { Encode_Sans, Lily_Script_One, Prosto_One } from 'next/font/google'
 import { Metadata } from 'next'
 import Header from '@/components/Header'
+import 'react-toastify/ReactToastify.min.css'
+import './globals.css'
 
 export const metadata: Metadata = {
   title: 'Price Savant - Compare Grocery Prices',

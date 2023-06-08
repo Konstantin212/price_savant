@@ -1,11 +1,12 @@
 'use client'
 
-import React from 'react'
+import React, { useState } from 'react'
 import ProductPhoto from '@/components/ProductPage/ProductPhoto'
 import { useFormik } from 'formik'
 import ProductForm from '@/components/ProductPage/ProductForm'
 import { productSchema } from '@/lib/schemas/product'
 import SubmitButton from '@/components/Atoms/Buttons/SubmitButton'
+import { ToastContainer } from 'react-toastify'
 
 export interface FormValues {
   image: null | string
@@ -22,6 +23,8 @@ const onSubmit = async (formValues: FormValues) => {
   })
 }
 const ProductPage = () => {
+  const [generatedImages, setGeneratedImages] = useState<string[]>([])
+
   const {
     setFieldValue,
     handleChange,
@@ -42,13 +45,15 @@ const ProductPage = () => {
     validationSchema: productSchema,
   })
 
-  console.log('isSubmitting')
-  console.log(isSubmitting)
-
   return (
     <form onSubmit={handleSubmit} className='flex w-full flex-wrap justify-end'>
-      <ProductPhoto image={values.image} setFieldValue={setFieldValue} />
+      <ProductPhoto
+        image={values.image}
+        generatedImages={generatedImages}
+        setFieldValue={setFieldValue}
+      />
       <ProductForm
+        setGeneratedImages={setGeneratedImages}
         handleChange={handleChange}
         handleBlur={handleBlur}
         values={values}
@@ -56,6 +61,12 @@ const ProductPage = () => {
         touched={touched}
       />
       <SubmitButton isSubmitting={isSubmitting} styles='mr-10' />
+      <ToastContainer
+        position='top-right'
+        autoClose={5000}
+        closeOnClick
+        theme='light'
+      />
     </form>
   )
 }

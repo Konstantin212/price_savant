@@ -1,9 +1,11 @@
 'use client'
 
 import React, { ChangeEvent, useState } from 'react'
+import GeneratedPhoto from '@/components/ProductPage/ProductPhoto/GeneratedPhoto'
 
 interface Props {
   image: null | string
+  generatedImages: string[]
   setFieldValue(
     field: string,
     value: any,
@@ -11,7 +13,7 @@ interface Props {
   ): void
 }
 
-const ProductPhoto = ({ image, setFieldValue }: Props) => {
+const ProductPhoto = ({ image, setFieldValue, generatedImages }: Props) => {
   const [previewImage, setPreviewImage] = useState(image)
 
   const handlePhotoUpload = (e: ChangeEvent<HTMLInputElement>) => {
@@ -37,12 +39,13 @@ const ProductPhoto = ({ image, setFieldValue }: Props) => {
       <div className='col-span-12'>
         {previewImage ? (
           <div className='group relative mt-2'>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={previewImage}
               alt=''
-              className='h-56 w-full rounded-lg object-cover'
+              className='mx-auto h-[300px] w-[300px] rounded-lg object-cover shadow-lg'
             />
-            <div className=' z-1 absolute inset-20 flex flex-nowrap overflow-hidden rounded  bg-primary/70 text-white opacity-0 transition group-hover:opacity-100'>
+            <div className='z-1 absolute inset-24 mx-auto flex w-[150px] flex-nowrap overflow-hidden rounded bg-primary/70 text-white opacity-0 transition group-hover:opacity-100'>
               <button
                 onClick={handleDelete}
                 className='w-full transition hover:bg-secondary-dark'
@@ -52,7 +55,7 @@ const ProductPhoto = ({ image, setFieldValue }: Props) => {
             </div>
           </div>
         ) : (
-          <div className='group mt-2 flex h-56 w-full items-center justify-center rounded-lg border border-dashed  border-gray-900/25 transition hover:border-secondary'>
+          <div className='group mx-auto mt-2 flex h-[300px] w-[300px] items-center justify-center rounded-lg border border-dashed  border-gray-900/25 transition hover:border-secondary'>
             <div className='border-red- text-center'>
               <svg
                 className='mx-auto h-12 w-12 text-gray-300 transition group-hover:text-secondary'
@@ -86,10 +89,18 @@ const ProductPhoto = ({ image, setFieldValue }: Props) => {
               <p className='text-xs leading-5 text-gray-600'>
                 PNG, JPG, GIF up to 10MB
               </p>
+              <p className='mt-5 text-sm font-semibold leading-5 text-gray-600 text-indigo-600'>
+                Or you can select an image from suggested after entering product
+                name
+              </p>
             </div>
           </div>
         )}
       </div>
+      <GeneratedPhoto
+        generatedImages={generatedImages}
+        setPreviewImage={setPreviewImage}
+      />
     </div>
   )
 }

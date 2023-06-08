@@ -12,10 +12,10 @@ import BackButton from '@/components/Atoms/Buttons/BackButton'
 
 const NewProduct = () => {
   return (
-    <div className='container mx-auto h-[calc(100%-87px)] pt-10'>
+    <div className='container mx-auto min-h-[calc(100%-87px)] py-10'>
       <BackButton />
       <h1 className='w-full text-center text-3xl font-bold'>Add new product</h1>
-      <div className='flex h-[calc(100%-87px-120px)] flex-wrap items-center px-44'>
+      <div className='flex min-h-[calc(100%-87px-120px)] flex-wrap items-center px-44'>
         <ProductPage />
       </div>
     </div>
