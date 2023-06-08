@@ -49,7 +49,7 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body
-        className={`${prosto.variable} ${encode.variable} ${lily.variable} font-default`}
+        className={`${prosto.variable} ${encode.variable} ${lily.variable} h-full font-default`}
       >
         <Header />
         {children}

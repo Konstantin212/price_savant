@@ -37,8 +37,10 @@
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@types/ms": "^0.7.31",
     "eslint-config-prettier": "^8.8.0",
+    "formik": "^2.4.1",
     "prettier": "^2.8.8",
     "prettier-plugin-tailwindcss": "^0.3.0",
-    "turbo": "^1.9.3"
+    "turbo": "^1.9.3",
+    "yup": "^1.2.0"
   }
 }
