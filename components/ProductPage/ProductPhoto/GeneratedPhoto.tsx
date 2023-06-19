@@ -4,17 +4,26 @@ import Image from 'next/image'
 interface Props {
   generatedImages: string[]
   setPreviewImage(e: string | null): void
+  setFieldValue(
+    field: string,
+    value: any,
+    shouldValidate?: boolean | undefined
+  ): void
 }
 
-const GeneratedPhoto = ({ generatedImages, setPreviewImage }: Props) => {
+const GeneratedPhoto = ({
+  generatedImages,
+  setPreviewImage,
+  setFieldValue,
+}: Props) => {
+  const handlePreviewImage = (photo: string) => () => {
+    setFieldValue('image', photo)
+    setPreviewImage(photo)
+  }
   return (
     <div className='col-span-12 flex justify-between'>
       {generatedImages.map((photo) => (
-        <button
-          type='button'
-          key={photo}
-          onClick={() => setPreviewImage(photo)}
-        >
+        <button type='button' key={photo} onClick={handlePreviewImage(photo)}>
           <Image
             src={photo}
             alt='product'

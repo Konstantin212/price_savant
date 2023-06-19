@@ -55,6 +55,7 @@ const ProductPage = () => {
       <ProductForm
         setGeneratedImages={setGeneratedImages}
         handleChange={handleChange}
+        setFieldValue={setFieldValue}
         handleBlur={handleBlur}
         values={values}
         errors={errors}

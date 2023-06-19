@@ -100,6 +100,7 @@ const ProductPhoto = ({ image, setFieldValue, generatedImages }: Props) => {
       <GeneratedPhoto
         generatedImages={generatedImages}
         setPreviewImage={setPreviewImage}
+        setFieldValue={setFieldValue}
       />
     </div>
   )

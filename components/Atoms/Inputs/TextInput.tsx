@@ -1,17 +1,8 @@
 import React from 'react'
-import { AutocompleteShops } from '@/components/ProductPage/ProductForm/methods'
+import { InputProps } from '@/components/Atoms/Inputs/inputTypes'
 
-interface Props {
+interface TextInputProps extends InputProps {
   value: string
-  id: string
-  wrapperClass?: string
-  name: string
-  error: string
-  placeholder: string
-  suggestions?: AutocompleteShops[] | undefined
-  handleChange(e: React.ChangeEvent<any>): void
-  handleBlur(e: React.ChangeEvent<any>): void
-  setSuggestion?(e: React.ChangeEvent<any>): void
 }
 
 const TextInput = ({
@@ -24,7 +15,7 @@ const TextInput = ({
   placeholder,
   suggestions,
   wrapperClass = '',
-}: Props) => {
+}: TextInputProps) => {
   return (
     <div className={`${suggestions?.length ? 'relative' : ''} ${wrapperClass}`}>
       <input
@@ -40,7 +31,7 @@ const TextInput = ({
       />
       <label
         htmlFor={id}
-        className={`relative cursor-text text-primary/50 transition-all ${
+        className={`relative ml-2 cursor-text text-primary/50 transition-all ${
           value ? '-top-4 ml-1 bg-white px-3 text-xs' : '-top-9  text-sm'
         }`}
       >
