@@ -1,5 +1,4 @@
 import { toast } from 'react-toastify'
-import debounce from 'lodash.debounce'
 
 type Photo = {
   id: number
@@ -11,12 +10,6 @@ type Photo = {
     username: string
     name: string
   }
-}
-
-export type AutocompleteShops = {
-  name: string
-  domain: string
-  logo: string
 }
 
 export const fetchImages = async (
@@ -54,19 +47,3 @@ export const fetchImages = async (
     setGeneratedImages([])
   }
 }
-
-export const fetchShopNameSuggestions = debounce(async (value, callback) => {
-  if (value) {
-    const data = await fetch(
-      `https://autocomplete.clearbit.com/v1/companies/suggest?query=${value}`,
-      {
-        headers: {
-          Authorization: `${process.env.NEXT_PUBLIC_CLEARBIT_KEY}`,
-        },
-      }
-    )
-
-    const res = await data.json()
-    callback(res)
-  }
-}, 300)

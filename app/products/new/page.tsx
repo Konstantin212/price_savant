@@ -1,6 +1,7 @@
 import React from 'react'
 import ProductPage from '@/components/ProductPage'
 import BackButton from '@/components/Atoms/Buttons/BackButton'
+import { _get } from '@/lib/api/utils'
 
 /*
  * 1. Should be able to download a product image
@@ -10,7 +11,11 @@ import BackButton from '@/components/Atoms/Buttons/BackButton'
  * 5. Should be able to add a product category, or select from the list
  * */
 
-const NewProduct = () => {
+const NewProduct = async () => {
+  const shopsRequest = await _get('/api/shops')
+  const { data: shops } = await shopsRequest.json()
+  console.log('shops')
+  console.log(shops)
   return (
     <div className='container mx-auto min-h-[calc(100%-87px)] py-10'>
       <BackButton />

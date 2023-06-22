@@ -29,7 +29,6 @@ const selectStyles = {
 
 const SelectInput = ({
   wrapperClass,
-  suggestions,
   setFieldValue,
   options,
   error,
@@ -44,7 +43,7 @@ const SelectInput = ({
   }
 
   return (
-    <div className={`${suggestions?.length ? 'relative' : ''} ${wrapperClass}`}>
+    <div className={wrapperClass}>
       <Select
         id={id}
         name={name}
