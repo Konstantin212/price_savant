@@ -1,7 +1,7 @@
 type CallParams = RequestInit | undefined
 
 const requestUrl = (url: string): string =>
-  `http://${process.env.API_HOST_LOCAL}${url}`
+  `http://${process.env.NEXT_PUBLIC_API_HOST_LOCAL}${url}`
 
 export const _get = async (url: string, params?: CallParams): Promise<any> => {
   return await handleRequest(url, {
@@ -44,12 +44,3 @@ const handleRequest = (url: string, params: CallParams) => {
     })
   }
 }
-
-const apiMethods = {
-  _get,
-  _post,
-  _put,
-  _delete,
-}
-
-export default apiMethods

@@ -1,12 +1,12 @@
 'use client'
 
 import React, { useState } from 'react'
-import ProductPhoto from '@/components/ProductPage/ProductPhoto'
 import { useFormik } from 'formik'
 import ProductForm from '@/components/ProductPage/ProductForm'
 import { productSchema } from '@/lib/schemas/product'
 import SubmitButton from '@/components/Atoms/Buttons/SubmitButton'
 import { ToastContainer } from 'react-toastify'
+import PhotoPreview from '@/components/PhotoPreview'
 
 export interface FormValues {
   image: null | string
@@ -47,7 +47,7 @@ const ProductPage = () => {
 
   return (
     <form onSubmit={handleSubmit} className='flex w-full flex-wrap justify-end'>
-      <ProductPhoto
+      <PhotoPreview
         image={values.image}
         generatedImages={generatedImages}
         setFieldValue={setFieldValue}

@@ -1,27 +1,31 @@
 'use client'
 
 import React, { useState } from 'react'
-import ProductPhoto from '@/components/ProductPage/ProductPhoto'
 import { useFormik } from 'formik'
 import { shopSchema } from '@/lib/schemas/product'
 import SubmitButton from '@/components/Atoms/Buttons/SubmitButton'
 import { ToastContainer } from 'react-toastify'
 import ShopForm from '@/components/ShopPage/ShopForm'
+import PhotoPreview from '@/components/PhotoPreview'
+import { _post } from '@/lib/api/utils'
+import { handleResponse } from '@/lib/api/helpers'
 
 export interface FormValues {
   image: null | string
   shopName: string
 }
 
+export type FormFields = keyof FormValues
+
 const onSubmit = async (formValues: FormValues) => {
-  console.log('formValues')
-  console.log(formValues)
-  await new Promise((resolve) => {
-    setTimeout(resolve, 2000)
-  })
+  const resp = await _post('/api/shops', { body: JSON.stringify(formValues) })
+
+  await handleResponse(resp)
 }
 const ShopPage = () => {
-  const [generatedImages, setGeneratedImages] = useState<string[]>([])
+  const [suggestionImagePreview, setSuggestionImagePreview] = useState<
+    string | null
+  >(null)
 
   const {
     setFieldValue,
@@ -43,13 +47,13 @@ const ShopPage = () => {
 
   return (
     <form onSubmit={handleSubmit} className='flex w-full flex-wrap justify-end'>
-      <ProductPhoto
+      <PhotoPreview
         image={values.image}
-        generatedImages={generatedImages}
+        imagePreview={suggestionImagePreview}
         setFieldValue={setFieldValue}
       />
       <ShopForm
-        setGeneratedImages={setGeneratedImages}
+        setSuggestionImagePreview={setSuggestionImagePreview}
         handleChange={handleChange}
         setFieldValue={setFieldValue}
         handleBlur={handleBlur}

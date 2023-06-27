@@ -1,6 +1,6 @@
 import React from 'react'
 import { FormikErrors, FormikTouched } from 'formik/dist/types'
-import { FormValues } from '@/components/ShopPage'
+import { FormFields, FormValues } from '@/components/ShopPage'
 import { fetchShopNameSuggestions } from '@/components/ShopPage/ShopForm/utils'
 import CreatableSelectInput from '@/components/Atoms/Inputs/CreatableSelect'
 
@@ -10,11 +10,11 @@ interface Props {
   errors: FormikErrors<FormValues>
   handleChange(e: React.ChangeEvent<any>): void
   setFieldValue(
-    field: string,
+    field: FormFields,
     value: any,
     shouldValidate?: boolean | undefined
   ): void
-  setGeneratedImages(images: string[]): void
+  setSuggestionImagePreview(image: string): void
   handleBlur(e: React.ChangeEvent<any>): void
 }
 
@@ -24,10 +24,12 @@ const ShopForm = ({
   touched,
   setFieldValue,
   handleBlur,
+  setSuggestionImagePreview,
 }: Props) => {
   return (
     <div className='mt-10 box-border w-1/2 px-10'>
       <CreatableSelectInput
+        setSuggestionImagePreview={setSuggestionImagePreview}
         placeholder='Shop name'
         name='shopName'
         handleBlur={handleBlur}

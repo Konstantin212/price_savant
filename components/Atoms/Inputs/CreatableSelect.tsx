@@ -4,21 +4,25 @@ import { AutocompleteShops } from '@/components/ShopPage/ShopForm/utils'
 import { createSuggestions } from '@/components/Atoms/Inputs/utils'
 import debounce from 'lodash.debounce'
 import { CSSObjectWithLabel } from 'react-select/dist/declarations/src/types'
+import { PlusCircleIcon } from '@heroicons/react/24/outline'
+import { FormFields } from '@/components/ShopPage'
 
 export interface Option {
   readonly label: string
   readonly value: string
+  readonly icon?: string
 }
 
 interface Props {
   optionFn(inputValue: string): Promise<AutocompleteShops[]>
+  setSuggestionImagePreview(inputValue: string): void
   setFieldValue(
-    field: string,
+    field: FormFields,
     value: any,
     shouldValidate?: boolean | undefined
   ): void
   value: string
-  name: string
+  name: FormFields
   wrapperClass?: string
   error: string
   placeholder: string
@@ -48,8 +52,12 @@ const CustomOption = ({ innerProps, label, data }: any) => (
     {...innerProps}
     className='flex cursor-pointer items-center px-3 py-1 hover:bg-secondary/20'
   >
-    {/* eslint-disable-next-line @next/next/no-img-element */}
-    <img src={data.icon} alt={data.label} className='mr-5 h-6 w-6' />
+    {data.icon ? (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img src={data.icon} alt={data.label} className='mr-5 h-6 w-6' />
+    ) : (
+      <PlusCircleIcon className='mr-5 h-6 w-6 text-primary' />
+    )}
     <span>{label}</span>
   </div>
 )
@@ -61,6 +69,7 @@ const CreatableSelectInput = ({
   handleBlur,
   setFieldValue,
   name,
+  setSuggestionImagePreview,
   value = '',
   placeholder = '',
 }: Props) => {
@@ -76,15 +85,21 @@ const CreatableSelectInput = ({
   }
 
   const handleCreateOption = (inputValue: string) => {
-    setNewValue({ label: inputValue, value: inputValue })
+    const value: Option = { label: inputValue, value: inputValue }
+    setNewValue(value)
   }
 
   const loadOptions = debounce(_loadOptions, 300)
 
   const handleSelectChange = (value: Option | null) => {
-    if (value) {
-      setFieldValue(name, value.label)
-      setNewValue(value)
+    if (!value) return null
+
+    setFieldValue(name, value.label)
+    setNewValue(value)
+
+    if (value.icon) {
+      setSuggestionImagePreview(value.icon)
+      setFieldValue('image', value.icon)
     }
   }
 

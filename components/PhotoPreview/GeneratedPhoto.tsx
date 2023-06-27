@@ -2,7 +2,7 @@ import React from 'react'
 import Image from 'next/image'
 
 interface Props {
-  generatedImages: string[]
+  generatedImages: string[] | string
   setPreviewImage(e: string | null): void
   setFieldValue(
     field: string,
@@ -20,6 +20,9 @@ const GeneratedPhoto = ({
     setFieldValue('image', photo)
     setPreviewImage(photo)
   }
+
+  if (!Array.isArray(generatedImages)) return null
+
   return (
     <div className='col-span-12 flex justify-between'>
       {generatedImages.map((photo) => (
