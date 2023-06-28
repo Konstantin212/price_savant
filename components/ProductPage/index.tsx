@@ -7,6 +7,11 @@ import { productSchema } from '@/lib/schemas/product'
 import SubmitButton from '@/components/Atoms/Buttons/SubmitButton'
 import { ToastContainer } from 'react-toastify'
 import PhotoPreview from '@/components/PhotoPreview'
+import { Option } from '@/components/Atoms/Inputs/inputTypes'
+
+interface PageProps {
+  shops: Option[]
+}
 
 export interface FormValues {
   image: null | string
@@ -22,7 +27,7 @@ const onSubmit = async (formValues: FormValues) => {
     setTimeout(resolve, 2000)
   })
 }
-const ProductPage = () => {
+const ProductPage: React.FC<PageProps> = ({ shops }) => {
   const [generatedImages, setGeneratedImages] = useState<string[]>([])
 
   const {
@@ -53,6 +58,7 @@ const ProductPage = () => {
         setFieldValue={setFieldValue}
       />
       <ProductForm
+        shops={shops}
         setGeneratedImages={setGeneratedImages}
         handleChange={handleChange}
         setFieldValue={setFieldValue}

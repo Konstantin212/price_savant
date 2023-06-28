@@ -1,51 +1,46 @@
-import { NextResponse } from 'next/server'
-import { db } from '@vercel/postgres'
+import { VercelPoolClient } from '@vercel/postgres'
 import isEmpty from 'lodash.isempty'
-import { ResponseHandler } from '@/lib/api/responseHandler'
+import { apiRouteHandler } from '@/lib/api/apiRouteHandler'
+import { IDBRequestResult } from '@/lib/api/types'
 
 export async function GET() {
-  const client = await db.connect()
-  let query
+  const dbRequestFunction = async (
+    client: VercelPoolClient
+  ): Promise<IDBRequestResult> => ({
+    result: await client.sql`SELECT * FROM shops`,
+  })
 
-  try {
-    query = await client.sql`SELECT * FROM shops`
-  } catch (error) {
-    return NextResponse.json({ error })
-  }
-
-  return NextResponse.json({ status: 200, data: query.rows })
+  return await apiRouteHandler({
+    dbRequestFunction,
+    requestType: 'get',
+  })
 }
 
 export async function POST(req: Request) {
-  const client = await db.connect()
-  const { image, shopName } = await req.json()
-  const responseHandler = new ResponseHandler()
+  let target
 
-  let query
-
-  try {
+  const dbRequestFunction = async (
+    client: VercelPoolClient
+  ): Promise<IDBRequestResult> => {
+    const { image, shopName } = await req.json()
     const isShopAlreadyExists =
       await client.sql`SELECT id FROM shops WHERE name = ${shopName}`
 
     if (!isEmpty(isShopAlreadyExists.rows)) {
-      return NextResponse.json(
-        responseHandler.error({ message: 'This shop name is already exists.' })
-      )
+      return { error: 'This shop name is already exists' }
     }
 
-    query =
+    target = shopName
+
+    const result =
       await client.sql`INSERT INTO Shops (name, image) VALUES (${shopName}, ${image})`
-  } catch (error) {
-    return NextResponse.json(
-      responseHandler.error({
-        messageTitle: shopName,
-        tableName: 'Shop',
-        data: error,
-      })
-    )
+
+    return { result }
   }
 
-  return NextResponse.json(
-    responseHandler.succeed({ data: query, messageTitle: shopName })
-  )
+  return await apiRouteHandler({
+    dbRequestFunction,
+    requestType: 'post',
+    target,
+  })
 }

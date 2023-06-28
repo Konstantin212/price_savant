@@ -4,9 +4,11 @@ import TextInput from '@/components/Atoms/Inputs/TextInput'
 import { FormikErrors, FormikTouched } from 'formik/dist/types'
 import { fetchImages } from '@/components/ProductPage/ProductForm/methods'
 import SelectInput from '@/components/Atoms/Inputs/SelectInput'
+import { Option } from '@/components/Atoms/Inputs/inputTypes'
 
 interface Props {
   values: FormValues
+  shops: Option[]
   touched: FormikTouched<FormValues>
   errors: FormikErrors<FormValues>
   handleChange(e: React.ChangeEvent<any>): void
@@ -26,6 +28,7 @@ const ProductForm = ({
   setGeneratedImages,
   handleBlur,
   touched,
+  shops,
   errors,
 }: Props) => {
   const fetchImagesOnBlur = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -48,10 +51,7 @@ const ProductForm = ({
         }
       />
       <SelectInput
-        options={[
-          { label: 'option 1', value: 'option value' },
-          { label: 'option 2', value: 'option value 2' },
-        ]}
+        options={shops}
         id='shopName'
         name='shopName'
         setFieldValue={setFieldValue}

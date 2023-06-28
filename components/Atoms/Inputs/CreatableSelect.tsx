@@ -6,12 +6,7 @@ import debounce from 'lodash.debounce'
 import { CSSObjectWithLabel } from 'react-select/dist/declarations/src/types'
 import { PlusCircleIcon } from '@heroicons/react/24/outline'
 import { FormFields } from '@/components/ShopPage'
-
-export interface Option {
-  readonly label: string
-  readonly value: string
-  readonly icon?: string
-}
+import { Option } from '@/components/Atoms/Inputs/inputTypes'
 
 interface Props {
   optionFn(inputValue: string): Promise<AutocompleteShops[]>

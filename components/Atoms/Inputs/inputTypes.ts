@@ -1,4 +1,5 @@
 import React from 'react'
+
 export type SelectOption = { value: string; label: string }
 
 export interface InputProps {
@@ -11,4 +12,10 @@ export interface InputProps {
     e: React.ChangeEvent<HTMLInputElement> | SelectOption | null
   ): void
   handleBlur(e: React.ChangeEvent<any>): void
+}
+
+export interface Option {
+  readonly label: string
+  readonly value: string | number
+  readonly icon?: string
 }

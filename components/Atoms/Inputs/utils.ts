@@ -1,4 +1,4 @@
-import { Option } from '@/components/Atoms/Inputs/CreatableSelect'
+import { Option } from '@/components/Atoms/Inputs/inputTypes'
 
 export const createSuggestions = async <
   T extends { domain: string; name: string; logo: string }
