@@ -11,6 +11,7 @@ import { Option } from '@/components/Atoms/Inputs/inputTypes'
 
 interface PageProps {
   shops: Option[]
+  categories: Option[]
 }
 
 export interface FormValues {
@@ -27,7 +28,7 @@ const onSubmit = async (formValues: FormValues) => {
     setTimeout(resolve, 2000)
   })
 }
-const ProductPage: React.FC<PageProps> = ({ shops }) => {
+const ProductPage: React.FC<PageProps> = ({ shops, categories }) => {
   const [generatedImages, setGeneratedImages] = useState<string[]>([])
 
   const {
@@ -59,6 +60,7 @@ const ProductPage: React.FC<PageProps> = ({ shops }) => {
       />
       <ProductForm
         shops={shops}
+        categories={categories}
         setGeneratedImages={setGeneratedImages}
         handleChange={handleChange}
         setFieldValue={setFieldValue}

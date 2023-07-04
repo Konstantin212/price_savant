@@ -17,8 +17,6 @@ export async function GET() {
 }
 
 export async function POST(req: Request) {
-  let target
-
   const dbRequestFunction = async (
     client: VercelPoolClient
   ): Promise<IDBRequestResult> => {
@@ -30,17 +28,14 @@ export async function POST(req: Request) {
       return { error: 'This shop name is already exists' }
     }
 
-    target = shopName
-
     const result =
       await client.sql`INSERT INTO Shops (name, image) VALUES (${shopName}, ${image})`
 
-    return { result }
+    return { result, target: shopName }
   }
 
   return await apiRouteHandler({
     dbRequestFunction,
     requestType: 'post',
-    target,
   })
 }

@@ -9,6 +9,7 @@ import { Option } from '@/components/Atoms/Inputs/inputTypes'
 interface Props {
   values: FormValues
   shops: Option[]
+  categories: Option[]
   touched: FormikTouched<FormValues>
   errors: FormikErrors<FormValues>
   handleChange(e: React.ChangeEvent<any>): void
@@ -29,6 +30,7 @@ const ProductForm = ({
   handleBlur,
   touched,
   shops,
+  categories,
   errors,
 }: Props) => {
   const fetchImagesOnBlur = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -61,11 +63,12 @@ const ProductForm = ({
         wrapperClass='mt-3'
         error={touched.shopName && errors.shopName ? errors.shopName : ''}
       />
-      <TextInput
+      <SelectInput
+        options={categories}
         id='categoryName'
         name='categoryName'
         value={values.categoryName}
-        handleChange={handleChange}
+        setFieldValue={setFieldValue}
         handleBlur={handleBlur}
         placeholder='Category name'
         wrapperClass='mt-3'

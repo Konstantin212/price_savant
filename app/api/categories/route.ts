@@ -3,6 +3,19 @@ import { IDBRequestResult } from '@/lib/api/types'
 import isEmpty from 'lodash.isempty'
 import { apiRouteHandler } from '@/lib/api/apiRouteHandler'
 
+export async function GET() {
+  const dbRequestFunction = async (
+    client: VercelPoolClient
+  ): Promise<IDBRequestResult> => ({
+    result: await client.sql`SELECT * FROM categories`,
+  })
+
+  return await apiRouteHandler({
+    dbRequestFunction,
+    requestType: 'get',
+  })
+}
+
 export async function POST(req: Request) {
   const dbRequestFunction = async (
     client: VercelPoolClient
