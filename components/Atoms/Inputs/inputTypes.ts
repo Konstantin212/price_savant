@@ -1,4 +1,6 @@
 import React from 'react'
+import { FormFields as CategoryFields } from '@/components/CategoriesPage'
+import { FormFields as ShopFields } from '@/components/ShopPage'
 
 export type SelectOption = { value: string; label: string }
 
@@ -16,6 +18,8 @@ export interface InputProps {
 
 export interface Option {
   readonly label: string
-  readonly value: string | number
+  readonly value: string
   readonly icon?: string
 }
+
+export type AllowedInputNames = CategoryFields | ShopFields

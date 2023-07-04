@@ -5,21 +5,21 @@ import { IDBRequestResult, RequestType } from '@/lib/api/types'
 
 interface IApiRouteHandler {
   requestType: RequestType
-  target?: string
   dbRequestFunction(client: VercelPoolClient): Promise<IDBRequestResult>
 }
 
 export const apiRouteHandler = async ({
   dbRequestFunction,
   requestType,
-  target,
 }: IApiRouteHandler) => {
   const client = await db.connect()
   const responseHandler = new ResponseHandler(requestType)
   let query
+  let messageTitle
 
   try {
-    const { result, error } = await dbRequestFunction(client)
+    const { result, error, target } = await dbRequestFunction(client)
+    messageTitle = target
     if (error) {
       return NextResponse.json(responseHandler.error({ message: error }))
     }
@@ -41,6 +41,6 @@ export const apiRouteHandler = async ({
     )
 
   return NextResponse.json(
-    responseHandler.succeed({ data: query, messageTitle: target })
+    responseHandler.succeed({ data: query, messageTitle })
   )
 }

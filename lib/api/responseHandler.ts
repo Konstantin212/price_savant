@@ -1,40 +1,10 @@
 import { QueryResult, QueryResultRow } from '@vercel/postgres'
 import { RequestType } from '@/lib/api/types'
-
-interface IMethodResult<Q> {
-  status: number
-  msg?: string
-  error?: string
-  data: Q
-}
-
-interface ISuccessParams<T> {
-  message?: string
-  messageTitle?: string
-  data: T
-}
-
-interface IErrorParams {
-  message?: string
-  messageTitle?: string
-  tableName?: string
-  data?: unknown
-}
-
-interface IResponseHandler {
-  readonly defaultSuccessMessage: string
-  readonly defaultErrorMessage: string
-  readonly requestType: RequestType
-
-  message?: string
-  messageTitle?: string
-  tableName?: string
-
-  succeed(
-    params: ISuccessParams<QueryResult<QueryResultRow>>
-  ): IMethodResult<QueryResult<QueryResultRow>>
-  error(params: IErrorParams): IMethodResult<unknown>
-}
+import {
+  IErrorParams,
+  IResponseHandler,
+  ISuccessParams,
+} from '@/lib/api/responseHandlerTypes'
 
 export class ResponseHandler implements IResponseHandler {
   readonly defaultSuccessMessage: string
@@ -55,12 +25,15 @@ export class ResponseHandler implements IResponseHandler {
     errorMessage?: string,
     successMessage?: string
   ): string {
-    const printError =
-      isError && errorMessage ? errorMessage : this.defaultErrorMessage
-    const printSuccess =
-      !isError && successMessage ? successMessage : this.defaultSuccessMessage
+    let customMessage
 
-    return this.message || printError || printSuccess
+    if (isError) {
+      customMessage = errorMessage || this.defaultErrorMessage
+    } else {
+      customMessage = successMessage || this.defaultSuccessMessage
+    }
+
+    return this.message || customMessage
   }
 
   private createGetResponseMessage(isError: boolean | undefined): string {

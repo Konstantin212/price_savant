@@ -5,4 +5,5 @@ export type RequestType = 'get' | 'post' | 'put' | 'delete' | 'patch'
 export interface IDBRequestResult {
   result?: QueryResult
   error?: string
+  target?: string
 }

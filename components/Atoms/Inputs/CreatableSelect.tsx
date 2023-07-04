@@ -5,19 +5,18 @@ import { createSuggestions } from '@/components/Atoms/Inputs/utils'
 import debounce from 'lodash.debounce'
 import { CSSObjectWithLabel } from 'react-select/dist/declarations/src/types'
 import { PlusCircleIcon } from '@heroicons/react/24/outline'
-import { FormFields } from '@/components/ShopPage'
-import { Option } from '@/components/Atoms/Inputs/inputTypes'
+import { AllowedInputNames, Option } from '@/components/Atoms/Inputs/inputTypes'
 
 interface Props {
   optionFn(inputValue: string): Promise<AutocompleteShops[]>
   setSuggestionImagePreview(inputValue: string): void
   setFieldValue(
-    field: FormFields,
+    field: AllowedInputNames,
     value: any,
     shouldValidate?: boolean | undefined
   ): void
   value: string
-  name: FormFields
+  name: AllowedInputNames
   wrapperClass?: string
   error: string
   placeholder: string
