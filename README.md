@@ -1,5 +1,5 @@
 ---
-name: Vercel Postgres Next.js Starter
+name:  Vercel Postgres Next.js Starter
 slug: postgres-starter
 description: Simple Next.js template that uses Vercel Postgres as the database.
 framework: Next.js
