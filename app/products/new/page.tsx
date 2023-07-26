@@ -5,17 +5,28 @@ import { _get } from '@/lib/api/utils'
 import { OptionAdapter } from '@/lib/adapters/OptionAdapter'
 import { Categories, Shop } from '@/lib/seeds/types'
 
-const NewProduct = async () => {
-  const shopsRequest = await _get('/api/shops')
-  const categoriesRequest = await _get('/api/categories')
+async function getShops() {
+  const res = await _get('/api/shops')
+  return res.json()
+}
+async function getCategories() {
+  const res = await _get('/api/categories')
+  return res.json()
+}
 
+export default async function NewProduct() {
+  const shopsRes = getShops()
+  const categoriesRes = getCategories()
+  const [shopsData, categoriesData] = await Promise.all([
+    shopsRes,
+    categoriesRes,
+  ])
   const {
     data: { rows: shopsRows },
-  } = await shopsRequest.json()
-
+  } = shopsData
   const {
     data: { rows: categoriesRows },
-  } = await categoriesRequest.json()
+  } = categoriesData
 
   const shopsAdapter = new OptionAdapter<Shop>(shopsRows, [
     'name',
@@ -42,5 +53,3 @@ const NewProduct = async () => {
     </div>
   )
 }
-
-export default NewProduct
