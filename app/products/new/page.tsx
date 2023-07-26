@@ -15,40 +15,42 @@ async function getCategories() {
 }
 
 export default async function NewProduct() {
-  const shopsRes = getShops()
-  const categoriesRes = getCategories()
-  const [shopsData, categoriesData] = await Promise.all([
-    shopsRes,
-    categoriesRes,
-  ])
-  const {
-    data: { rows: shopsRows },
-  } = shopsData
-  const {
-    data: { rows: categoriesRows },
-  } = categoriesData
-
-  const shopsAdapter = new OptionAdapter<Shop>(shopsRows, [
-    'name',
-    'id',
-    'image',
-  ])
-
-  const categoriesAdapter = new OptionAdapter<Categories>(categoriesRows, [
-    'name',
-    'id',
-    'image',
-  ])
-
-  const shops = shopsAdapter.transformData()
-  const categories = categoriesAdapter.transformData()
+  // const shopsRes = getShops()
+  // const categoriesRes = getCategories()
+  const shopsRes = new Promise((res) => res)
+  const categoriesRes = new Promise((res) => res)
+  // const [shopsData, categoriesData] = await Promise.all([
+  //   shopsRes,
+  //   categoriesRes,
+  // ])
+  // const {
+  //   data: { rows: shopsRows },
+  // } = shopsData
+  // const {
+  //   data: { rows: categoriesRows },
+  // } = categoriesData
+  //
+  // const shopsAdapter = new OptionAdapter<Shop>(shopsRows, [
+  //   'name',
+  //   'id',
+  //   'image',
+  // ])
+  //
+  // const categoriesAdapter = new OptionAdapter<Categories>(categoriesRows, [
+  //   'name',
+  //   'id',
+  //   'image',
+  // ])
+  //
+  // const shops = shopsAdapter.transformData()
+  // const categories = categoriesAdapter.transformData()
 
   return (
     <div className='container mx-auto min-h-[calc(100%-87px)] py-10'>
       <BackButton />
       <h1 className='w-full text-center text-3xl font-bold'>Add new product</h1>
       <div className='flex min-h-[calc(100%-87px-120px)] flex-wrap items-center px-44'>
-        <ProductPage shops={shops} categories={categories} />
+        <ProductPage shops={[]} categories={[]} />
       </div>
     </div>
   )
