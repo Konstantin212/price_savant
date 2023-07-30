@@ -1,35 +1,20 @@
-import { VercelPoolClient } from '@vercel/postgres'
 import { IDBRequestResult } from '@/lib/api/types'
-import isEmpty from 'lodash.isempty'
 import { apiRouteHandler } from '@/lib/api/apiRouteHandler'
-
-export async function GET() {
-  const dbRequestFunction = async (
-    client: VercelPoolClient
-  ): Promise<IDBRequestResult> => ({
-    result: await client.sql`SELECT * FROM categories`,
-  })
-
-  return await apiRouteHandler({
-    dbRequestFunction,
-    requestType: 'get',
-  })
-}
+import { CategoriesBase } from '@/lib/db/categories'
 
 export async function POST(req: Request) {
-  const dbRequestFunction = async (
-    client: VercelPoolClient
-  ): Promise<IDBRequestResult> => {
+  const dbRequestFunction = async (): Promise<IDBRequestResult> => {
+    const categoriesBase = new CategoriesBase()
     const { image, categoryName } = await req.json()
-    const isItemAlreadyExists =
-      await client.sql`SELECT id FROM categories WHERE name = ${categoryName}`
 
-    if (!isEmpty(isItemAlreadyExists.rows)) {
-      return { error: 'This category name is already exists' }
+    const { result, error } = await categoriesBase.createCategory({
+      image,
+      name: categoryName,
+    })
+
+    if (error) {
+      return { error }
     }
-
-    const result =
-      await client.sql`INSERT INTO Categories (name, image) VALUES (${categoryName}, ${image})`
 
     return { result, target: categoryName }
   }

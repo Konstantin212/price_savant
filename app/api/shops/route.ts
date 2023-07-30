@@ -1,35 +1,20 @@
-import { VercelPoolClient } from '@vercel/postgres'
-import isEmpty from 'lodash.isempty'
 import { apiRouteHandler } from '@/lib/api/apiRouteHandler'
 import { IDBRequestResult } from '@/lib/api/types'
-
-export async function GET() {
-  const dbRequestFunction = async (
-    client: VercelPoolClient
-  ): Promise<IDBRequestResult> => ({
-    result: await client.sql`SELECT * FROM shops`,
-  })
-
-  return await apiRouteHandler({
-    dbRequestFunction,
-    requestType: 'get',
-  })
-}
+import { ShopsBase } from '@/lib/db/shops'
 
 export async function POST(req: Request) {
-  const dbRequestFunction = async (
-    client: VercelPoolClient
-  ): Promise<IDBRequestResult> => {
+  const dbRequestFunction = async (): Promise<IDBRequestResult> => {
+    const shopsBase = new ShopsBase()
     const { image, shopName } = await req.json()
-    const isShopAlreadyExists =
-      await client.sql`SELECT id FROM shops WHERE name = ${shopName}`
 
-    if (!isEmpty(isShopAlreadyExists.rows)) {
-      return { error: 'This shop name is already exists' }
+    const { result, error } = await shopsBase.createShop({
+      image,
+      name: shopName,
+    })
+
+    if (error) {
+      return { error }
     }
-
-    const result =
-      await client.sql`INSERT INTO Shops (name, image) VALUES (${shopName}, ${image})`
 
     return { result, target: shopName }
   }
