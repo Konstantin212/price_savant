@@ -1,36 +1,28 @@
 import React from 'react'
 import ProductPage from '@/components/ProductPage'
 import BackButton from '@/components/Atoms/Buttons/BackButton'
-import { getCategories, getShops } from '@/api'
+import { ShopsBase } from '@/lib/db/shops'
 import { OptionAdapter } from '@/lib/adapters/OptionAdapter'
 import { Categories, Shop } from '@/lib/seeds/types'
+import { CategoriesBase } from '@/lib/db/categories'
 
 export default async function NewProduct() {
-  const shopsRes = getShops()
-  const categoriesRes = getCategories()
+  const shopBase = new ShopsBase()
+  const categoriesBase = new CategoriesBase()
 
-  const [shopsData, categoriesData] = await Promise.all([
-    shopsRes,
-    categoriesRes,
-  ])
-  const {
-    data: { rows: shopsRows },
-  } = shopsData
-  const {
-    data: { rows: categoriesRows },
-  } = categoriesData
+  const { data: shopsRows } = await shopBase.getAllShops()
+  const { data: categoriesRows } = await categoriesBase.getAllCategories()
 
-  const shopsAdapter = new OptionAdapter<Shop>(shopsRows, [
+  const shopsAdapter = new OptionAdapter<Shop>(shopsRows as Shop[], [
     'name',
     'id',
     'image',
   ])
 
-  const categoriesAdapter = new OptionAdapter<Categories>(categoriesRows, [
-    'name',
-    'id',
-    'image',
-  ])
+  const categoriesAdapter = new OptionAdapter<Categories>(
+    categoriesRows as Categories[],
+    ['name', 'id', 'image']
+  )
 
   const shops = shopsAdapter.transformData()
   const categories = categoriesAdapter.transformData()
