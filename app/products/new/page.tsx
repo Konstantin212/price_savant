@@ -1,21 +1,24 @@
 import React from 'react'
 import ProductPage from '@/components/ProductPage'
 import BackButton from '@/components/Atoms/Buttons/BackButton'
-import { _get } from '@/lib/api/utils'
+import { getCategories, getShops } from '@/api'
 import { OptionAdapter } from '@/lib/adapters/OptionAdapter'
 import { Categories, Shop } from '@/lib/seeds/types'
 
-const NewProduct = async () => {
-  const shopsRequest = await _get('/api/shops')
-  const categoriesRequest = await _get('/api/categories')
+export default async function NewProduct() {
+  const shopsRes = getShops()
+  const categoriesRes = getCategories()
 
+  const [shopsData, categoriesData] = await Promise.all([
+    shopsRes,
+    categoriesRes,
+  ])
   const {
     data: { rows: shopsRows },
-  } = await shopsRequest.json()
-
+  } = shopsData
   const {
     data: { rows: categoriesRows },
-  } = await categoriesRequest.json()
+  } = categoriesData
 
   const shopsAdapter = new OptionAdapter<Shop>(shopsRows, [
     'name',
@@ -42,5 +45,3 @@ const NewProduct = async () => {
     </div>
   )
 }
-
-export default NewProduct
