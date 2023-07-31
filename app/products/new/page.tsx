@@ -1,31 +1,10 @@
 import React from 'react'
 import ProductPage from '@/components/ProductPage'
 import BackButton from '@/components/Atoms/Buttons/BackButton'
-import { ShopsBase } from '@/lib/db/shops'
-import { OptionAdapter } from '@/lib/adapters/OptionAdapter'
-import { Categories, Shop } from '@/lib/seeds/types'
-import { CategoriesBase } from '@/lib/db/categories'
+import { getInitialData } from '@/app/products/new/utils'
 
 export default async function NewProduct() {
-  const shopBase = new ShopsBase()
-  const categoriesBase = new CategoriesBase()
-
-  const { data: shopsRows } = await shopBase.getAllShops()
-  const { data: categoriesRows } = await categoriesBase.getAllCategories()
-
-  const shopsAdapter = new OptionAdapter<Shop>(shopsRows as Shop[], [
-    'name',
-    'id',
-    'image',
-  ])
-
-  const categoriesAdapter = new OptionAdapter<Categories>(
-    categoriesRows as Categories[],
-    ['name', 'id', 'image']
-  )
-
-  const shops = shopsAdapter.transformData()
-  const categories = categoriesAdapter.transformData()
+  const { shops, categories } = await getInitialData()
 
   return (
     <div className='container mx-auto min-h-[calc(100%-87px)] py-10'>

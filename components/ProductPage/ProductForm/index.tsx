@@ -54,27 +54,34 @@ const ProductForm = ({
       />
       <SelectInput
         options={shops}
-        id='shopName'
-        name='shopName'
+        id='shopId'
+        name='shopId'
         setFieldValue={setFieldValue}
-        value={values.shopName}
+        value={values.shopId}
         handleBlur={handleBlur}
         placeholder='Shop name'
         wrapperClass='mt-3'
-        error={touched.shopName && errors.shopName ? errors.shopName : ''}
+        error={touched.shopId && errors.shopId ? errors.shopId : ''}
       />
       <SelectInput
         options={categories}
-        id='categoryName'
-        name='categoryName'
-        value={values.categoryName}
+        id='categoryId'
+        name='categoryId'
+        value={values.categoryId}
         setFieldValue={setFieldValue}
         handleBlur={handleBlur}
         placeholder='Category name'
         wrapperClass='mt-3'
-        error={
-          touched.categoryName && errors.categoryName ? errors.categoryName : ''
-        }
+        error={touched.categoryId && errors.categoryId ? errors.categoryId : ''}
+      />
+      <TextInput
+        id='price'
+        name='price'
+        value={values.price}
+        handleChange={handleChange}
+        handleBlur={handleBlur}
+        placeholder='Price'
+        error={touched.price && errors.price ? errors.price : ''}
       />
     </div>
   )
