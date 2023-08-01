@@ -2,6 +2,7 @@ import { sql } from '@vercel/postgres'
 import { Base } from '@/lib/db/BaseAbstraction'
 import { IDBRequestResult } from '@/lib/api/types'
 import isEmpty from 'lodash.isempty'
+import { IDBInput } from '@/lib/db/types'
 
 interface IProductDBInput extends IDBInput {
   shopId: string
@@ -16,6 +17,15 @@ export class ProductsBase extends Base {
       return { data: rows }
     } catch (e) {
       return { data: null, error: this.errorMsg }
+    }
+  }
+
+  async getProductsLength() {
+    try {
+      const { rows } = await sql`SELECT COUNT(*) FROM products`
+      return { data: rows }
+    } catch (e) {
+      throw new Error(e as string)
     }
   }
 

@@ -14,9 +14,9 @@ interface TabButtons {
 }
 
 const tabButtons: TabButtons[] = [
-  { id: 1, type: 'button', title: 'My Products' },
-  { id: 2, type: 'button', title: 'My Shops' },
-  { id: 3, type: 'button', title: 'My Categories' },
+  { id: 0, type: 'button', title: 'My Products' },
+  { id: 1, type: 'button', title: 'My Shops' },
+  { id: 2, type: 'button', title: 'My Categories' },
 ]
 
 const Tabs = ({

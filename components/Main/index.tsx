@@ -1,18 +1,29 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Tabs from '@/components/Tabs'
 import TabContent from '@/components/Tabs/TabContent'
 import { ToastContainer } from 'react-toastify'
 
-const itemsCounter = {
-  1: 6,
-  2: 10,
-  3: 2,
+const itemsCounter = [0, 0, 0]
+
+interface Props {
+  productsLength: number
+  shopsLength: number
+  categoriesLength: number
 }
 
-const Main = () => {
-  const [activeTabId, setActiveTab] = useState(1)
+const Main: React.FC<Props> = ({
+  productsLength,
+  shopsLength,
+  categoriesLength,
+}) => {
+  const [activeTabId, setActiveTab] = useState(0)
+  const [counters, setCounters] = useState(itemsCounter)
+
+  useEffect(() => {
+    setCounters([productsLength, shopsLength, categoriesLength])
+  }, [productsLength, shopsLength, categoriesLength])
 
   const handleTabClick = (id: number) => () => {
     setActiveTab(id)
@@ -23,7 +34,7 @@ const Main = () => {
       <Tabs
         handleTabClick={handleTabClick}
         activeTabId={activeTabId}
-        itemsCounter={itemsCounter}
+        itemsCounter={counters}
       >
         <div className='container mx-auto'>
           <TabContent activeTabId={activeTabId} />

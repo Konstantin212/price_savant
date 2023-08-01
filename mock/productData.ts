@@ -11,8 +11,4 @@ interface Data {
   [key: number]: ProductsPromise | ShopPromise | CategoryPromise
 }
 
-export const data: Data = {
-  1: products,
-  2: shops,
-  3: categories,
-}
+export const data: Data = [products, shops, categories]
