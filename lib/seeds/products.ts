@@ -5,7 +5,7 @@ export async function productsTable() {
     CREATE TABLE IF NOT EXISTS products (
       id SERIAL PRIMARY KEY,
       name CHAR(100) NOT NULL,
-      image BYTEA,
+      image TEXT,
       "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
     );
     `

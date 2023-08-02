@@ -6,3 +6,8 @@ export const timeAgo = (timestamp: Date, timeOnly?: boolean): string => {
     timeOnly ? '' : ' ago'
   }`
 }
+
+export const isUrl = (image: string): boolean => {
+  const urlPattern = /^https?:\/\/.*/ // Regular expression pattern for URLs
+  return urlPattern.test(image)
+}

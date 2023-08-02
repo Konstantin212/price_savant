@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import TabCard from '@/components/Tabs/TabCard'
-import { data } from '@/mock/productData'
 import { ProductData } from '@/mock/products'
 import FloatingActionButton from '@/components/FloatingActionButton'
+import { _get } from '@/lib/api/utils'
 
 interface Props {
   activeTabId: number
 }
 
-const getTabData = (itemId: number) => {
-  return data[itemId]
+const getTabData = async (itemId: number) => {
+  const products = await _get('/api/products?withShops=true')
+  const { data } = await products.json()
+  return data
 }
 
 const TabContent = ({ activeTabId }: Props) => {

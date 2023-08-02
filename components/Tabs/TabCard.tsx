@@ -1,6 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 import { ProductData } from '@/mock/products'
+import { isUrl } from '@/lib/utils'
 
 interface Props {
   tabData: ProductData[]
@@ -9,7 +10,7 @@ interface Props {
 const TabCard = ({ tabData }: Props) => {
   return (
     <>
-      {tabData.map(({ title, id, image, shopList }) => (
+      {tabData.map(({ title, id, image, shoplist }) => (
         <div
           key={id}
           id='partnerCard'
@@ -26,26 +27,48 @@ const TabCard = ({ tabData }: Props) => {
               target='_blank'
               rel='noreferrer noopener'
             >
-              <Image
-                src={image}
-                alt='EasyCode'
-                width='300'
-                height='300'
-                className='w-full object-cover'
-              />
+              {isUrl(image) ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={image}
+                  alt={title}
+                  width={300}
+                  height={300}
+                  className='w-full object-cover'
+                />
+              ) : (
+                <Image
+                  src={image}
+                  alt={title}
+                  width='300'
+                  height='300'
+                  className='w-full object-cover'
+                />
+              )}
             </a>
           </div>
-          {shopList.map(({ id, name, price, image }, index) => (
+          {shoplist.map(({ id, name, price, image }, index) => (
             <div className='grid grid-cols-4' key={id}>
               <div className='col-span-3 p-3 pr-0 text-lg'>
                 <h4 className='flex items-center font-bold'>
-                  <Image
-                    src={image}
-                    width={35}
-                    height={35}
-                    alt={name}
-                    className='mr-2'
-                  />
+                  {isUrl(image) ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={image}
+                      alt={name}
+                      width={35}
+                      height={35}
+                      className='mr-2'
+                    />
+                  ) : (
+                    <Image
+                      src={image}
+                      width={35}
+                      height={35}
+                      alt={name}
+                      className='mr-2'
+                    />
+                  )}
                   {name}:
                 </h4>
               </div>

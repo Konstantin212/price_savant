@@ -2,7 +2,7 @@ import { sql } from '@vercel/postgres'
 import { Base } from '@/lib/db/BaseAbstraction'
 import { IDBRequestResult } from '@/lib/api/types'
 import isEmpty from 'lodash.isempty'
-import { IDBInput } from '@/lib/db/types'
+import { IDBInput, TBooleanString } from '@/lib/db/types'
 
 interface IProductDBInput extends IDBInput {
   shopId: string
@@ -11,12 +11,34 @@ interface IProductDBInput extends IDBInput {
 }
 
 export class ProductsBase extends Base {
-  async getAllProducts() {
+  async selectProductsWithShops() {
+    const { rows } = await sql`SELECT Products.*, 
+                    TRIM(Products.name) as name, 
+                    ROUND(AVG(Prices.price), 2), 
+                    json_agg(json_build_object('id', Prices.shop_id, 'name', TRIM(Shops.name), 'image', Shops.image, 'price', Prices.price)) as shopList
+                FROM Products
+                INNER JOIN Prices ON Products.id = Prices.product_id
+                INNER JOIN Shops ON Shops.id = Prices.shop_id
+                GROUP BY Products.id
+                ORDER BY Products.name`
+
+    return rows
+  }
+  async selectAllProducts() {
+    const { rows } = await sql`SELECT * FROM Products`
+
+    return rows
+  }
+  async getAllProducts(withShops: TBooleanString): Promise<{ result: any[] }> {
     try {
-      const { rows } = await sql`SELECT * FROM products`
-      return { data: rows }
+      const rows = withShops
+        ? await this.selectProductsWithShops()
+        : await this.selectAllProducts()
+
+      return { result: rows }
     } catch (e) {
-      return { data: null, error: this.errorMsg }
+      console.error(e)
+      throw new Error(e as string)
     }
   }
 

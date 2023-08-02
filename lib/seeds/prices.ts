@@ -5,9 +5,9 @@ export async function pricesTable() {
     CREATE TABLE IF NOT EXISTS prices (
       id SERIAL PRIMARY KEY,
       price INTEGER NOT NULL,
-      product_id INTEGER,
-      shop_id INTEGER,
-      category_id INTEGER,
+      product_id INTEGER NOT NULL,
+      shop_id INTEGER NOT NULL,
+      category_id INTEGER NOT NULL,
       "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
     );
     
