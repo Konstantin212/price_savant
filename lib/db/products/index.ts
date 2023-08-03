@@ -3,6 +3,7 @@ import { Base } from '@/lib/db/BaseAbstraction'
 import { IDBRequestResult } from '@/lib/api/types'
 import isEmpty from 'lodash.isempty'
 import { IDBInput, TBooleanString } from '@/lib/db/types'
+import { CurrencyAdapter } from '@/lib/adapters/CurrencyAdapter'
 
 interface IProductDBInput extends IDBInput {
   shopId: string
@@ -79,12 +80,15 @@ export class ProductsBase extends Base {
         return { error: 'This product in this shop is already exists' }
       }
 
+      const currencyAdapter = new CurrencyAdapter(price)
+      const priceInCents = currencyAdapter.getCentPrice()
+
       return {
         result:
-          await sql`INSERT INTO Prices (price, product_id, shop_id, category_id) VALUES (${price}, ${productId}, ${shopId}, ${categoryId})`,
+          await sql`INSERT INTO Prices (price, product_id, shop_id, category_id) VALUES (${priceInCents}, ${productId}, ${shopId}, ${categoryId})`,
       }
     } catch (e) {
-      return { error: e as string }
+      throw new Error(e as string)
     }
   }
 }

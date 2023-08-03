@@ -5,6 +5,7 @@ import { FormikErrors, FormikTouched } from 'formik/dist/types'
 import { fetchImages } from '@/components/ProductPage/ProductForm/methods'
 import SelectInput from '@/components/Atoms/Inputs/SelectInput'
 import { Option } from '@/components/Atoms/Inputs/inputTypes'
+import NumberInput from '@/components/Atoms/Inputs/NumberInput'
 
 interface Props {
   values: FormValues
@@ -74,7 +75,7 @@ const ProductForm = ({
         wrapperClass='mt-3'
         error={touched.categoryId && errors.categoryId ? errors.categoryId : ''}
       />
-      <TextInput
+      <NumberInput
         id='price'
         name='price'
         value={values.price}

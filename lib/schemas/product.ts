@@ -14,7 +14,7 @@ export const productSchema = yup.object().shape({
     .required('Category name is required field'),
   price: yup
     .string()
-    .max(6, 'Price should be max 15 characters')
+    .max(9, 'Price should be less than 1m')
     .required('Price is required field'),
 })
 
