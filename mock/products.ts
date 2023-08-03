@@ -2,8 +2,8 @@ import { ShopInfo } from '@/mock/shopData'
 
 export interface ProductData {
   id: number
-  title: string
+  name: string
   category: string
   image: string
-  shoplist: ShopInfo[]
+  shoplist?: ShopInfo[]
 }

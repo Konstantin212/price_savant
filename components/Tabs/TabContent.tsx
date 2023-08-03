@@ -3,13 +3,15 @@ import TabCard from '@/components/Tabs/TabCard'
 import { ProductData } from '@/mock/products'
 import FloatingActionButton from '@/components/FloatingActionButton'
 import { _get } from '@/lib/api/utils'
+import { TabIndexes } from '@/types/enum'
 
 interface Props {
   activeTabId: number
 }
 
 const getTabData = async (itemId: number) => {
-  const products = await _get('/api/products?withShops=true')
+  const withShops = TabIndexes[itemId] === 'products' ? '?withShops=true' : ''
+  const products = await _get(`/api/${TabIndexes[itemId]}${withShops}`)
   const { data } = await products.json()
   return data
 }

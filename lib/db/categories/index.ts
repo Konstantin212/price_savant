@@ -1,17 +1,21 @@
 import { Base } from '@/lib/db/BaseAbstraction'
-import { sql } from '@vercel/postgres'
+import { QueryResultRow, sql } from '@vercel/postgres'
 import isEmpty from 'lodash.isempty'
 import { IDBRequestResult } from '@/lib/api/types'
 import { IDBInput } from '@/lib/db/types'
+import { handleError } from '@/lib/db/utils'
 
 export class CategoriesBase extends Base {
-  async getAllCategories() {
+  async getAllCategories(): Promise<QueryResultRow[] | null> {
     try {
-      const { rows } = await sql`SELECT * FROM categories`
-      return { data: rows }
+      const { rows } =
+        await sql`SELECT *, TRIM(name) FROM categories ORDER BY name`
+      return rows
     } catch (e) {
-      return { data: null, error: this.errorMsg }
+      handleError(e)
     }
+
+    return null
   }
 
   async getCategoriesLength() {

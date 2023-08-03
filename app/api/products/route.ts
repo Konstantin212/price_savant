@@ -1,6 +1,7 @@
 import { apiRouteHandler } from '@/lib/api/apiRouteHandler'
 import { ProductsBase } from '@/lib/db/products'
 import { TBooleanString } from '@/lib/db/types'
+import { handleError } from '@/lib/api/utils'
 
 const productsBase = new ProductsBase()
 export async function GET(req: Request) {
@@ -12,8 +13,7 @@ export async function GET(req: Request) {
 
       return { result }
     } catch (e) {
-      console.error(e)
-      throw new Error(e as string)
+      return handleError(e)
     }
   }
 

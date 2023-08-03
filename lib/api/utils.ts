@@ -44,3 +44,12 @@ const handleRequest = (url: string, params: CallParams) => {
     })
   }
 }
+
+export const handleError = (error: Error | unknown): { error: string } => {
+  if (error instanceof Error) {
+    console.error(error)
+    return { error: error.message }
+  }
+
+  return { error: error as string }
+}

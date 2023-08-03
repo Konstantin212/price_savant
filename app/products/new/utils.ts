@@ -1,14 +1,14 @@
 import { ShopsBase } from '@/lib/db/shops'
 import { CategoriesBase } from '@/lib/db/categories'
 import { OptionAdapter } from '@/lib/adapters/OptionAdapter'
-import { Categories, Shop } from '@/lib/seeds/types'
+import { Category, Shop } from '@/types/interface'
 
 export const getInitialData = async () => {
   const shopBase = new ShopsBase()
   const categoriesBase = new CategoriesBase()
 
-  const { data: shopsRows } = await shopBase.getAllShops()
-  const { data: categoriesRows } = await categoriesBase.getAllCategories()
+  const shopsRows = await shopBase.getAllShops()
+  const categoriesRows = await categoriesBase.getAllCategories()
 
   const shopsAdapter = new OptionAdapter<Shop>(shopsRows as Shop[], [
     'name',
@@ -16,8 +16,8 @@ export const getInitialData = async () => {
     'image',
   ])
 
-  const categoriesAdapter = new OptionAdapter<Categories>(
-    categoriesRows as Categories[],
+  const categoriesAdapter = new OptionAdapter<Category>(
+    categoriesRows as Category[],
     ['name', 'id', 'image']
   )
 

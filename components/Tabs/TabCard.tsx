@@ -11,17 +11,19 @@ interface Props {
 const TabCard = ({ tabData }: Props) => {
   return (
     <>
-      {tabData.map(({ title, id, image, shoplist }) => (
+      {tabData.map(({ name, id, image, shoplist }) => (
         <div
           key={id}
           id='partnerCard'
-          className='flex min-h-[400px] max-w-xs flex-col overflow-hidden rounded-md bg-primary p-2 text-gray-50'
+          className={`min-h-[${
+            shoplist ? 400 : 280
+          }px] flex max-w-xs flex-col overflow-hidden rounded-md bg-primary p-2 text-gray-50`}
         >
           <div>
-            <h3 className='pb-4 pl-8 pt-2 text-left text-xl'>{title}</h3>
+            <h3 className='pb-4 pl-8 pt-2 text-left text-xl'>{name}</h3>
           </div>
 
-          <div className='flex min-h-[200px] items-center justify-center bg-primary'>
+          <div className='flex min-h-[200px] items-center justify-center bg-white'>
             <a
               className='flex max-h-[200px] items-center justify-center overflow-hidden'
               href='#'
@@ -32,7 +34,7 @@ const TabCard = ({ tabData }: Props) => {
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
                   src={image}
-                  alt={title}
+                  alt={name}
                   width={300}
                   height={300}
                   className='w-full object-cover'
@@ -40,7 +42,7 @@ const TabCard = ({ tabData }: Props) => {
               ) : (
                 <Image
                   src={image}
-                  alt={title}
+                  alt={name}
                   width='300'
                   height='300'
                   className='w-full object-cover'
@@ -48,48 +50,49 @@ const TabCard = ({ tabData }: Props) => {
               )}
             </a>
           </div>
-          {shoplist.map(({ id, name, price, image }, index) => {
-            const currencyAdapter = new CurrencyAdapter(price)
+          {shoplist &&
+            shoplist.map(({ id, name, price, image }, index) => {
+              const currencyAdapter = new CurrencyAdapter(price)
 
-            return (
-              <div className='grid grid-cols-4' key={id}>
-                <div className='col-span-3 p-3 pr-0 text-lg'>
-                  <h4 className='flex items-center font-bold'>
-                    {isUrl(image) ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
-                        src={image}
-                        alt={name}
-                        width={35}
-                        height={35}
-                        className='mr-2'
-                      />
-                    ) : (
-                      <Image
-                        src={image}
-                        width={35}
-                        height={35}
-                        alt={name}
-                        className='mr-2'
-                      />
-                    )}
-                    {name}:
-                  </h4>
-                </div>
-                <div className='col-span-1 pt-3'>
-                  <div className='ml-auto w-20'>
-                    <p
-                      className={`text-lg ${
-                        !index ? 'text-green-300' : 'text-red-400'
-                      }`}
-                    >
-                      {currencyAdapter.getReadablePrice()}$
-                    </p>
+              return (
+                <div className='grid grid-cols-4' key={id}>
+                  <div className='col-span-3 p-3 pr-0 text-lg'>
+                    <h4 className='flex items-center font-bold'>
+                      {isUrl(image) ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={image}
+                          alt={name}
+                          width={35}
+                          height={35}
+                          className='mr-2'
+                        />
+                      ) : (
+                        <Image
+                          src={image}
+                          width={35}
+                          height={35}
+                          alt={name}
+                          className='mr-2'
+                        />
+                      )}
+                      {name}:
+                    </h4>
+                  </div>
+                  <div className='col-span-1 pt-3'>
+                    <div className='ml-auto w-20'>
+                      <p
+                        className={`text-lg ${
+                          !index ? 'text-green-300' : 'text-red-400'
+                        }`}
+                      >
+                        {currencyAdapter.getReadablePrice()}$
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            )
-          })}
+              )
+            })}
         </div>
       ))}
     </>
