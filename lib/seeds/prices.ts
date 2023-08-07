@@ -9,6 +9,7 @@ export async function pricesTable() {
       shop_id INTEGER NOT NULL,
       category_id INTEGER NOT NULL,
       "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+      "updatedAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
     );
     
     ALTER TABLE "prices" ADD FOREIGN KEY ("shop_id") REFERENCES "shops" ("id");

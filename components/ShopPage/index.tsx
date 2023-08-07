@@ -48,8 +48,7 @@ const ShopPage = () => {
   return (
     <form onSubmit={handleSubmit} className='flex w-full flex-wrap justify-end'>
       <PhotoPreview
-        image={values.image}
-        imagePreview={suggestionImagePreview}
+        image={values.image || suggestionImagePreview}
         setFieldValue={setFieldValue}
       />
       <ShopForm

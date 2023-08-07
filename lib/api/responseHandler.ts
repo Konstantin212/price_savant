@@ -56,12 +56,24 @@ export class ResponseHandler implements IResponseHandler {
     return this.createResponseMessage(isError, errorMessage, successMessage)
   }
 
+  private createPutResponseMessage(isError?: boolean): string {
+    const errorMessage =
+      this.messageTitle &&
+      `The value ${this.messageTitle} hasn't been updated in the table ${this.tableName}`
+    const successMessage =
+      this.messageTitle && `${this.messageTitle} successfully updated`
+
+    return this.createResponseMessage(isError, errorMessage, successMessage)
+  }
+
   private getMessage(isError?: boolean) {
     switch (this.requestType) {
       case 'get':
         return this.createGetResponseMessage(isError)
       case 'post':
         return this.createPostResponseMessage(isError)
+      case 'put':
+        return this.createPutResponseMessage(isError)
       default:
         return ''
     }

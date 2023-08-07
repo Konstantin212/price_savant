@@ -9,7 +9,7 @@ export class CategoriesBase extends Base {
   async getAllCategories(): Promise<QueryResultRow[] | null> {
     try {
       const { rows } =
-        await sql`SELECT *, TRIM(name) FROM categories ORDER BY name`
+        await sql`SELECT id, TRIM(name) as name, image FROM categories ORDER BY name`
       return rows
     } catch (e) {
       handleError(e)

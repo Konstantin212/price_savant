@@ -6,6 +6,7 @@ export async function categoriesTable() {
       id SERIAL PRIMARY KEY,
       name CHAR(100) NOT NULL,
       "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+      "updatedAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
       image TEXT
     );
     `

@@ -8,15 +8,18 @@ import SubmitButton from '@/components/Atoms/Buttons/SubmitButton'
 import { ToastContainer } from 'react-toastify'
 import PhotoPreview from '@/components/PhotoPreview'
 import { Option } from '@/components/Atoms/Inputs/inputTypes'
-import { _post } from '@/lib/api/utils'
+import { _post, _put } from '@/lib/api/utils'
 import { handleResponse } from '@/lib/api/helpers'
+import { IProductWithPrice } from '@/app/types'
 
 interface PageProps {
   shops: Option[]
   categories: Option[]
+  data?: IProductWithPrice | null
 }
 
 export interface FormValues {
+  id?: number
   image: null | string
   productName: string
   shopId: string
@@ -25,14 +28,33 @@ export interface FormValues {
 }
 
 const onSubmit = async (formValues: FormValues) => {
-  const resp = await _post('/api/products', {
-    body: JSON.stringify(formValues),
-  })
+  let resp
+
+  if (formValues.id) {
+    resp = await _put(`/api/products/${formValues.id}`, {
+      body: JSON.stringify(formValues),
+    })
+  } else {
+    resp = await _post('/api/products', {
+      body: JSON.stringify(formValues),
+    })
+  }
 
   await handleResponse(resp)
 }
-const ProductPage: React.FC<PageProps> = ({ shops, categories }) => {
+
+const defaultValues = {
+  image: null,
+  productName: '',
+  shopId: '',
+  categoryId: '',
+  price: '',
+}
+
+const ProductPage: React.FC<PageProps> = ({ shops, categories, data }) => {
   const [generatedImages, setGeneratedImages] = useState<string[]>([])
+
+  const initialValues = (data || defaultValues) as FormValues
 
   const {
     setFieldValue,
@@ -44,13 +66,7 @@ const ProductPage: React.FC<PageProps> = ({ shops, categories }) => {
     errors,
     touched,
   } = useFormik({
-    initialValues: {
-      image: null,
-      productName: '',
-      shopId: '',
-      categoryId: '',
-      price: '',
-    } as FormValues,
+    initialValues,
     onSubmit,
     validationSchema: productSchema,
   })

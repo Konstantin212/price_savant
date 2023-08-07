@@ -20,13 +20,15 @@ const TabCard = ({ tabData }: Props) => {
           }px] flex max-w-xs flex-col overflow-hidden rounded-md bg-primary p-2 text-gray-50`}
         >
           <div>
-            <h3 className='pb-4 pl-8 pt-2 text-left text-xl'>{name}</h3>
+            <h3 className='pb-4 pl-8 pt-2 text-left text-xl'>
+              <a href={`/products/${id}`}>{name}</a>
+            </h3>
           </div>
 
           <div className='flex min-h-[200px] items-center justify-center bg-white'>
             <a
               className='flex max-h-[200px] items-center justify-center overflow-hidden'
-              href='#'
+              href={`/products/${id}`}
               target='_blank'
               rel='noreferrer noopener'
             >

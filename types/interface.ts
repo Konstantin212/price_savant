@@ -1,4 +1,4 @@
-interface DataService {
+export interface DataService {
   id: number
   name: string
   image: string

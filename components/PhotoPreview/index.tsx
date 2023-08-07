@@ -10,7 +10,6 @@ import PhotoUploader, {
 interface Props {
   image: null | string
   generatedImages?: string[]
-  imagePreview?: string | null
   setFieldValue(
     field: string,
     value: any,
@@ -18,21 +17,14 @@ interface Props {
   ): void
 }
 
-const PhotoPreview = ({
-  image,
-  setFieldValue,
-  generatedImages,
-  imagePreview,
-}: Props) => {
+const PhotoPreview = ({ image, setFieldValue, generatedImages }: Props) => {
   const showGeneratedImagesPreview = Array.isArray(generatedImages)
 
-  const [previewImage, setPreviewImage] = useState<ImageBuffer>(
-    image || imagePreview
-  )
+  const [previewImage, setPreviewImage] = useState<ImageBuffer>(image)
 
   useEffect(() => {
-    setPreviewImage(imagePreview)
-  }, [imagePreview])
+    setPreviewImage(image)
+  }, [image])
 
   const handleDelete = () => {
     setPreviewImage(null)

@@ -7,6 +7,7 @@ export async function productsTable() {
       name CHAR(100) NOT NULL,
       image TEXT,
       "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+      "updatedAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
     );
     `
   console.log(`Created "products" table`)

@@ -1,9 +1,12 @@
-import { sql } from '@vercel/postgres'
+import { QueryResultRow, sql } from '@vercel/postgres'
 import { Base } from '@/lib/db/BaseAbstraction'
 import { IDBRequestResult } from '@/lib/api/types'
 import isEmpty from 'lodash.isempty'
 import { IDBInput, TBooleanString } from '@/lib/db/types'
 import { CurrencyAdapter } from '@/lib/adapters/CurrencyAdapter'
+import { handleError } from '@/lib/db/utils'
+import { Product } from '@/types/interface'
+import { PricesBase } from '@/lib/db/prices'
 
 interface IProductDBInput extends IDBInput {
   shopId: string
@@ -11,8 +14,14 @@ interface IProductDBInput extends IDBInput {
   categoryId: string
 }
 
+interface IProductUpdateDBInput extends IDBInput, IProductDBInput {
+  id: string
+}
+
+interface ProductRow extends QueryResultRow, Product {}
+
 export class ProductsBase extends Base {
-  async selectProductsWithShops() {
+  private async selectProductsWithShops() {
     const { rows } = await sql`SELECT Products.*, 
                     TRIM(Products.name) as name, 
                     ROUND(AVG(Prices.price), 2), 
@@ -25,7 +34,7 @@ export class ProductsBase extends Base {
 
     return rows
   }
-  async selectAllProducts() {
+  private async selectAllProducts() {
     const { rows } = await sql`SELECT * FROM Products`
 
     return rows
@@ -43,6 +52,24 @@ export class ProductsBase extends Base {
     }
   }
 
+  private async getProductByName(name: string) {
+    return await sql`SELECT id FROM products WHERE name = ${name}`
+  }
+
+  async getProduct(id: string): Promise<ProductRow | null> {
+    try {
+      if (!id) throw new Error('Product do not exists')
+
+      const { rows } =
+        await sql`SELECT *, TRIM(name) as name FROM products WHERE id = ${id}`
+      return rows[0] as ProductRow
+    } catch (e) {
+      handleError(e)
+    }
+
+    return null
+  }
+
   async getProductsLength() {
     try {
       const { rows } = await sql`SELECT COUNT(*) FROM products`
@@ -50,10 +77,6 @@ export class ProductsBase extends Base {
     } catch (e) {
       throw new Error(e as string)
     }
-  }
-
-  async getProductByName(name: string) {
-    return await sql`SELECT id FROM products WHERE name = ${name}`
   }
 
   async createProduct({
@@ -88,7 +111,46 @@ export class ProductsBase extends Base {
           await sql`INSERT INTO Prices (price, product_id, shop_id, category_id) VALUES (${priceInCents}, ${productId}, ${shopId}, ${categoryId})`,
       }
     } catch (e) {
-      throw new Error(e as string)
+      return handleError(e)
+    }
+  }
+
+  async updateProduct({
+    id,
+    name,
+    price,
+    categoryId,
+    image,
+    shopId,
+  }: IProductUpdateDBInput): Promise<IDBRequestResult> {
+    const Prices = new PricesBase()
+
+    const product = await this.getProduct(id)
+    const productPrice = await Prices.getProductPrice({ productId: id })
+
+    if (isEmpty(product) || isEmpty(productPrice)) {
+      return handleError('Product does not exists')
+    }
+
+    try {
+      const currencyAdapter = new CurrencyAdapter(price)
+      const priceInCents = currencyAdapter.getCentPrice()
+
+      await Prices.updatePrice({
+        productId: id,
+        values: {
+          price: priceInCents,
+          shop_id: Number(shopId),
+          category_id: Number(categoryId),
+        },
+      })
+
+      const result =
+        await sql`UPDATE products SET name = ${name}, image = ${image}, updatedat = to_timestamp(${Date.now()} / 1000.0) WHERE id = ${id}`
+
+      return { result }
+    } catch (e) {
+      return handleError('Product does not exists')
     }
   }
 }

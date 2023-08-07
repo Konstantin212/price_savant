@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { InputProps, SelectOption } from '@/components/Atoms/Inputs/inputTypes'
 import Select from 'react-select'
 import { CSSObjectWithLabel } from 'react-select/dist/declarations/src/types'
@@ -38,18 +38,23 @@ const SelectInput = ({
   placeholder,
   value,
 }: SelectInputProps) => {
+  const defaultValue = useMemo(
+    () => options.find((o) => o.value === value),
+    [options, value]
+  )
   const handleSelectChange = (item: SelectOption | null) => {
     setFieldValue(name, item?.value)
   }
 
   return (
     <div className={wrapperClass}>
-      <Select
+      <Select<SelectOption>
         id={id}
         name={name}
         options={options}
         onChange={handleSelectChange}
         onBlur={handleBlur}
+        defaultValue={defaultValue}
         placeholder={value ? placeholder : 'Enter ' + placeholder}
         styles={selectStyles}
         className={`${

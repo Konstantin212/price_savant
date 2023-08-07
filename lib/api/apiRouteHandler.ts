@@ -19,24 +19,24 @@ export const apiRouteHandler = async ({
     const { result, error, target } = await dbRequestFunction()
     messageTitle = target
     if (error) {
-      return NextResponse.json(responseHandler.error({ message: error }))
+      const { status, ...resp } = responseHandler.error({ message: error })
+      return NextResponse.json(resp, { status })
     }
     query = result
   } catch (error) {
-    return NextResponse.json(
-      responseHandler.error({
-        data: error,
-      })
-    )
+    const { status, ...resp } = responseHandler.error({
+      data: error,
+    })
+    return NextResponse.json(resp, { status })
   }
 
-  if (!query)
-    return NextResponse.json(
-      responseHandler.error({
-        data: query,
-        message: 'Query is empty',
-      })
-    )
+  if (!query) {
+    const { status, ...resp } = responseHandler.error({
+      data: query,
+      message: 'Query is empty',
+    })
+    return NextResponse.json(resp, { status })
+  }
 
   return NextResponse.json(
     responseHandler.succeed({ data: query, messageTitle })

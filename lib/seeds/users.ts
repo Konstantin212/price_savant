@@ -7,6 +7,7 @@ export async function usersTable() {
       "first_name" varchar,
       "last_name" varchar,
       "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+      "updatedAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
     );
     `
   console.log(`Created "users" table`)
