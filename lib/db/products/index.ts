@@ -25,7 +25,10 @@ export class ProductsBase extends Base {
     const { rows } = await sql`SELECT Products.*, 
                     TRIM(Products.name) as name, 
                     ROUND(AVG(Prices.price), 2), 
-                    json_agg(json_build_object('id', Prices.shop_id, 'name', TRIM(Shops.name), 'image', Shops.image, 'price', Prices.price) ORDER BY price, Shops.name) as shopList
+                    json_agg(
+                        json_build_object('id', Prices.shop_id, 'name', TRIM(Shops.name), 'image', Shops.image, 'price', Prices.price) 
+                        ORDER BY price, Shops.name
+                    ) as shopList
                 FROM Products
                 INNER JOIN Prices ON Products.id = Prices.product_id
                 INNER JOIN Shops ON Shops.id = Prices.shop_id
