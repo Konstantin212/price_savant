@@ -6,6 +6,7 @@ import { ProductsBase } from '@/lib/db/products'
 import { PricesBase } from '@/lib/db/prices'
 import { IUpdateProductPage } from '@/app/types'
 import { Option } from '@/components/molecules/Inputs/inputTypes'
+import { CurrencyAdapter } from '@/lib/adapters/CurrencyAdapter'
 
 const productsBase = new ProductsBase()
 const shopBase = new ShopsBase()
@@ -20,14 +21,23 @@ const convertDataToOptions = <D extends Record<string, any>>(
   return adapter.transformData()
 }
 
-export const getInitialData = async ({ shopId }: { shopId: string }) => {
-  const shopRows = await shopBase.getShopById(shopId)
+export const getInitialData = async ({
+  shopId,
+}: Partial<{ shopId: string }>) => {
+  let shopRows
   const categoriesRows = await categoriesBase.getAllCategories()
 
-  const shops = convertDataToOptions<Shop>(shopRows as Shop[])
   const categories = convertDataToOptions<Category>(
     categoriesRows as Category[]
   )
+
+  if (shopId) {
+    shopRows = await shopBase.getShopById(shopId)
+  } else {
+    shopRows = await shopBase.getAllShops()
+  }
+
+  const shops = convertDataToOptions<Shop>(shopRows as Shop[])
 
   return { categories, shops }
 }
@@ -51,12 +61,13 @@ export const getProductDataWithPrice = async ({
   if (!data) return null
 
   const { category_id: categoryId, price } = data[0]
+  const currencyAdapter = new CurrencyAdapter(price)
 
   const productData = {
     id: product.id,
     image: product.image,
     productName: product.name,
-    price,
+    price: currencyAdapter.getReadablePrice(),
     categoryId: categoryId.toString(),
     shopId: shopId,
   }
