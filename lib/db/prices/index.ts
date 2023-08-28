@@ -9,12 +9,14 @@ type ValidPricePropertyName = Partial<{ [key in keyof Price]: number }>
 export class PricesBase extends Base {
   async getProductPrice({
     productId,
+    shopId,
   }: {
     productId: string
+    shopId: string
   }): Promise<CustomProductPrice[] | null> {
     try {
       const { rows } =
-        await sql`SELECT * FROM prices WHERE product_id = ${productId}`
+        await sql`SELECT * FROM prices WHERE product_id = ${productId} AND shop_id=${shopId}`
       return rows as CustomProductPrice[]
     } catch (e) {
       handleError(e)

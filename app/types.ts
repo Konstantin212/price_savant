@@ -6,7 +6,9 @@ export type PropsWithChildren<P> = P & { children?: ReactNode }
 interface PossiblePageParams {
   id?: string
 }
-interface PossibleSearchParams {}
+interface PossibleSearchParams {
+  shopId?: string
+}
 
 export interface PageProps {
   params: PossiblePageParams
@@ -22,6 +24,5 @@ export interface IProductWithPrice extends Partial<Product> {
 
 export interface IUpdateProductPage {
   productData: IProductWithPrice
-  shopData: any
   categoriesData: any
 }

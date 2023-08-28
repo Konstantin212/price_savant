@@ -19,7 +19,12 @@ const ProductEditPage = ({ shops, categories, data }: IProductEditPage) => {
         {isEdit ? 'Edit' : 'Add new'} product
       </h1>
       <div className='flex min-h-[calc(100%-87px-120px)] flex-wrap items-center px-44'>
-        <ProductPage shops={shops} categories={categories} data={data} />
+        <ProductPage
+          shops={shops}
+          categories={categories}
+          data={data}
+          isEdit={isEdit}
+        />
       </div>
     </div>
   )

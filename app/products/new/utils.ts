@@ -20,51 +20,37 @@ const convertDataToOptions = <D extends Record<string, any>>(
   return adapter.transformData()
 }
 
-export const getInitialData = async () => {
-  const shopsRows = await shopBase.getAllShops()
+export const getInitialData = async ({ shopId }: { shopId: string }) => {
+  const shopRows = await shopBase.getShopById(shopId)
   const categoriesRows = await categoriesBase.getAllCategories()
 
-  const shops = convertDataToOptions<Shop>(shopsRows as Shop[])
+  const shops = convertDataToOptions<Shop>(shopRows as Shop[])
   const categories = convertDataToOptions<Category>(
     categoriesRows as Category[]
   )
 
-  return { shops, categories }
-}
-
-const getProductDataById = async ({ id }: { id: string }) => {
-  return await productsBase.getProduct(id)
-}
-
-const getProductRelatedAvailableShops = async ({
-  productId,
-}: {
-  productId: string
-}) => {
-  return await shopBase.getRelatedToProductShops({ productId })
+  return { categories, shops }
 }
 
 export const getProductDataWithPrice = async ({
   id,
+  shopId,
 }: {
   id: string
+  shopId: string
 }): Promise<IUpdateProductPage | null> => {
-  const product = await getProductDataById({ id })
-  const availableShops = await getProductRelatedAvailableShops({
-    productId: id,
-  })
-
-  const shopData = convertDataToOptions<Shop>(availableShops as Shop[])
+  const product = await productsBase.getProduct(id)
 
   if (!product) return null
 
   const data = await pricesBase.getProductPrice({
     productId: id,
+    shopId,
   })
 
   if (!data) return null
 
-  const { category_id: categoryId, price, shop_id: shopId } = data[0]
+  const { category_id: categoryId, price } = data[0]
 
   const productData = {
     id: product.id,
@@ -72,8 +58,8 @@ export const getProductDataWithPrice = async ({
     productName: product.name,
     price,
     categoryId: categoryId.toString(),
-    shopId: shopId.toString(),
+    shopId: shopId,
   }
 
-  return { productData, shopData, categoriesData: [] }
+  return { productData, categoriesData: [] }
 }

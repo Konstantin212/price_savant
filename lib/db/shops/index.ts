@@ -4,10 +4,6 @@ import { IDBRequestResult } from '@/lib/api/types'
 import isEmpty from 'lodash.isempty'
 import { IDBInput } from '@/lib/db/types'
 import { DBRequestError, handleError } from '@/lib/db/utils'
-import { PricesBase } from '@/lib/db/prices'
-import { Shop } from '@/types/interface'
-
-const pricesBase = new PricesBase()
 
 export class ShopsBase extends Base {
   async getAllShops(): Promise<QueryResultRow[] | DBRequestError> {
@@ -20,21 +16,11 @@ export class ShopsBase extends Base {
     }
   }
 
-  async getRelatedToProductShops({
-    productId,
-  }: {
-    productId: string
-  }): Promise<QueryResultRow[] | DBRequestError> {
+  async getShopById(id: string): Promise<QueryResultRow | DBRequestError> {
     try {
-      const shopIds = await pricesBase.getProductPrice({ productId })
-
-      const allShopsData = (await this.getAllShops()) as Shop[]
-
-      if (!allShopsData) return handleError("Can't get shops")
-
-      const idList = shopIds?.map((shop) => shop.shop_id).sort()
-
-      return allShopsData.filter((shop) => !idList?.includes(shop.id))
+      const { rows } =
+        await sql`SELECT *, TRIM(name) as name FROM shops WHERE id = ${id}`
+      return rows
     } catch (e) {
       return handleError(e)
     }

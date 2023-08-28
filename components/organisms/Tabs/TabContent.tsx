@@ -27,7 +27,13 @@ const TabContent = ({ activeTabId }: Props) => {
   return (
     <div className='my-10 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'>
       {tabData.map(({ name, id, image, shoplist }) => (
-        <TabCard<ShopInfo> name={name} key={id} image={image} list={shoplist} />
+        <TabCard<ShopInfo>
+          name={name}
+          key={id}
+          productId={id}
+          image={image}
+          list={shoplist}
+        />
       ))}
       <FloatingActionButton />
     </div>

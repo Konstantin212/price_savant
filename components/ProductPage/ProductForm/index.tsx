@@ -21,6 +21,7 @@ interface Props {
   ): void
   setGeneratedImages(images: string[]): void
   handleBlur(e: React.ChangeEvent<any>): void
+  isEdit: boolean
 }
 
 const ProductForm = ({
@@ -33,6 +34,7 @@ const ProductForm = ({
   shops,
   categories,
   errors,
+  isEdit,
 }: Props) => {
   const fetchImagesOnBlur = async (e: React.ChangeEvent<HTMLInputElement>) => {
     handleBlur(e)
@@ -58,6 +60,7 @@ const ProductForm = ({
         id='shopId'
         name='shopId'
         setFieldValue={setFieldValue}
+        isDisabled={isEdit}
         value={values.shopId}
         onBlur={handleBlur}
         placeholder='Shop name'

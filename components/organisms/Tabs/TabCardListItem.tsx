@@ -10,6 +10,7 @@ type Props = {
   textColor: string
   price: number
   id: number
+  productId: number
 }
 
 const TabCardListItem: React.FC<Props> = ({
@@ -18,6 +19,7 @@ const TabCardListItem: React.FC<Props> = ({
   textColor,
   price,
   id,
+  productId,
 }) => {
   const dropDownItems = useMemo(
     () => [
@@ -25,7 +27,7 @@ const TabCardListItem: React.FC<Props> = ({
         title: 'Edit product',
         Tag: 'a',
         itemAttributes: {
-          href: `/products/${id}`,
+          href: `/products/${productId}?shopId=${id}`,
           className: 'p-2',
         },
       },
@@ -38,7 +40,7 @@ const TabCardListItem: React.FC<Props> = ({
         },
       },
     ],
-    [id]
+    [id, productId]
   )
 
   return (

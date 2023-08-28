@@ -8,11 +8,17 @@ import TabCardListItem from '@/components/organisms/Tabs/TabCardListItem'
 type Props<L> = {
   name: string
   image: string
+  productId: number
   list?: L[]
 }
 
 // TODO: replace ShopInfo with more common type
-const TabCard = <L extends ShopInfo>({ list, name, image }: Props<L>) => {
+const TabCard = <L extends ShopInfo>({
+  list,
+  name,
+  image,
+  productId,
+}: Props<L>) => {
   const listHeightStyle = list ? 'min-h-[400px]' : 'min-h-[280px]'
   return (
     <div
@@ -29,6 +35,7 @@ const TabCard = <L extends ShopInfo>({ list, name, image }: Props<L>) => {
         return (
           <TabCardListItem
             key={id}
+            productId={productId}
             id={id}
             image={image}
             name={name}

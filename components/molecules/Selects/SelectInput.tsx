@@ -26,6 +26,7 @@ const SelectInput = ({
   onBlur,
   placeholder,
   value,
+  ...rest
 }: SelectInputProps) => {
   const defaultValue = useMemo(
     () => options.find((o: SelectOption) => o.value === value),
@@ -46,6 +47,7 @@ const SelectInput = ({
         defaultValue={defaultValue}
         placeholder={value ? placeholder : 'Enter ' + placeholder}
         className={error && 'border-red-600'}
+        {...rest}
       />
       {error && <TextError className='-mt-4'>{error}</TextError>}
     </div>

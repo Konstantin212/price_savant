@@ -16,6 +16,7 @@ interface PageProps {
   shops: Option[]
   categories: Option[]
   data?: IProductWithPrice | null
+  isEdit: boolean
 }
 
 export interface FormValues {
@@ -51,7 +52,12 @@ const defaultValues = {
   price: '',
 }
 
-const ProductPage: React.FC<PageProps> = ({ shops, categories, data }) => {
+const ProductPage: React.FC<PageProps> = ({
+  shops,
+  categories,
+  data,
+  isEdit,
+}) => {
   const [generatedImages, setGeneratedImages] = useState<string[]>([])
 
   const initialValues = (data || defaultValues) as FormValues
@@ -88,6 +94,7 @@ const ProductPage: React.FC<PageProps> = ({ shops, categories, data }) => {
         values={values}
         errors={errors}
         touched={touched}
+        isEdit={isEdit}
       />
       <SubmitButton disabled={isSubmitting} className='mr-10' />
       <ToastContainer

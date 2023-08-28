@@ -126,7 +126,7 @@ export class ProductsBase extends Base {
     const Prices = new PricesBase()
 
     const product = await this.getProduct(id)
-    const productPrice = await Prices.getProductPrice({ productId: id })
+    const productPrice = await Prices.getProductPrice({ productId: id, shopId })
 
     if (isEmpty(product) || isEmpty(productPrice)) {
       return handleError('Product does not exists')
