@@ -1,7 +1,7 @@
 import React from 'react'
 import { FormikErrors, FormikTouched } from 'formik/dist/types'
 import { FormValues } from '@/components/CategoriesPage'
-import TextInput from '@/components/Atoms/Inputs/TextInput'
+import TextInput from '@/components/molecules/Inputs/TextInput'
 import { fetchImages } from '@/components/ProductPage/ProductForm/methods'
 
 interface Props {
@@ -33,8 +33,8 @@ const CategoryForm = ({
         id='categoryName'
         name='categoryName'
         value={values.categoryName}
-        handleChange={handleChange}
-        handleBlur={fetchImagesOnBlur}
+        onChange={handleChange}
+        onBlur={fetchImagesOnBlur}
         placeholder='Category name'
         error={
           touched.categoryName && errors.categoryName ? errors.categoryName : ''

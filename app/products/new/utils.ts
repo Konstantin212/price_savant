@@ -5,7 +5,7 @@ import { Category, Shop } from '@/types/interface'
 import { ProductsBase } from '@/lib/db/products'
 import { PricesBase } from '@/lib/db/prices'
 import { IUpdateProductPage } from '@/app/types'
-import { Option } from '@/components/Atoms/Inputs/inputTypes'
+import { Option } from '@/components/molecules/Inputs/inputTypes'
 
 const productsBase = new ProductsBase()
 const shopBase = new ShopsBase()

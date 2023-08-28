@@ -1,6 +1,6 @@
 import React from 'react'
-import BackButton from '@/components/Atoms/Buttons/BackButton'
 import ShopPage from '@/components/ShopPage'
+import BackButton from '@/components/molecules/Buttons/BackButton'
 
 const NewShop = () => {
   return (

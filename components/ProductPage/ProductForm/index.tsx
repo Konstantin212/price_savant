@@ -1,11 +1,11 @@
 import React from 'react'
 import { FormValues } from '@/components/ProductPage'
-import TextInput from '@/components/Atoms/Inputs/TextInput'
+import TextInput from '@/components/molecules/Inputs/TextInput'
 import { FormikErrors, FormikTouched } from 'formik/dist/types'
 import { fetchImages } from '@/components/ProductPage/ProductForm/methods'
-import SelectInput from '@/components/Atoms/Inputs/SelectInput'
-import { Option } from '@/components/Atoms/Inputs/inputTypes'
-import NumberInput from '@/components/Atoms/Inputs/NumberInput'
+import SelectInput from '@/components/molecules/Selects/SelectInput'
+import { Option } from '@/components/molecules/Inputs/inputTypes'
+import NumberInput from '@/components/molecules/Inputs/NumberInput'
 
 interface Props {
   values: FormValues
@@ -46,8 +46,8 @@ const ProductForm = ({
         id='productName'
         name='productName'
         value={values.productName}
-        handleChange={handleChange}
-        handleBlur={fetchImagesOnBlur}
+        onChange={handleChange}
+        onBlur={fetchImagesOnBlur}
         placeholder='Product name'
         error={
           touched.productName && errors.productName ? errors.productName : ''
@@ -59,7 +59,7 @@ const ProductForm = ({
         name='shopId'
         setFieldValue={setFieldValue}
         value={values.shopId}
-        handleBlur={handleBlur}
+        onBlur={handleBlur}
         placeholder='Shop name'
         wrapperClass='mt-3'
         error={touched.shopId && errors.shopId ? errors.shopId : ''}
@@ -70,7 +70,7 @@ const ProductForm = ({
         name='categoryId'
         value={values.categoryId}
         setFieldValue={setFieldValue}
-        handleBlur={handleBlur}
+        onBlur={handleBlur}
         placeholder='Category name'
         wrapperClass='mt-3'
         error={touched.categoryId && errors.categoryId ? errors.categoryId : ''}
@@ -79,8 +79,8 @@ const ProductForm = ({
         id='price'
         name='price'
         value={values.price}
-        handleChange={handleChange}
-        handleBlur={handleBlur}
+        onChange={handleChange}
+        onBlur={handleBlur}
         placeholder='Price'
         error={touched.price && errors.price ? errors.price : ''}
       />

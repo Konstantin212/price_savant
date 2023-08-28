@@ -4,13 +4,13 @@ import React, { useState } from 'react'
 import { useFormik } from 'formik'
 import ProductForm from '@/components/ProductPage/ProductForm'
 import { productSchema } from '@/lib/schemas/product'
-import SubmitButton from '@/components/Atoms/Buttons/SubmitButton'
 import { ToastContainer } from 'react-toastify'
 import PhotoPreview from '@/components/PhotoPreview'
-import { Option } from '@/components/Atoms/Inputs/inputTypes'
+import { Option } from '@/components/molecules/Inputs/inputTypes'
 import { _post, _put } from '@/lib/api/utils'
 import { handleResponse } from '@/lib/api/helpers'
 import { IProductWithPrice } from '@/app/types'
+import SubmitButton from '@/components/molecules/Buttons/SubmitButton'
 
 interface PageProps {
   shops: Option[]
@@ -89,7 +89,7 @@ const ProductPage: React.FC<PageProps> = ({ shops, categories, data }) => {
         errors={errors}
         touched={touched}
       />
-      <SubmitButton isSubmitting={isSubmitting} styles='mr-10' />
+      <SubmitButton disabled={isSubmitting} className='mr-10' />
       <ToastContainer
         position='top-right'
         autoClose={5000}

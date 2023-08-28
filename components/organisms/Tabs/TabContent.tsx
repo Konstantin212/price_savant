@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import TabCard from '@/components/Tabs/TabCard'
+import TabCard from '@/components/organisms/Tabs/TabCard'
 import { ProductData } from '@/mock/products'
 import FloatingActionButton from '@/components/FloatingActionButton'
 import { _get } from '@/lib/api/utils'
 import { TabIndexes } from '@/types/enum'
+import { ShopInfo } from '@/mock/shopData'
 
 interface Props {
   activeTabId: number
@@ -25,7 +26,9 @@ const TabContent = ({ activeTabId }: Props) => {
 
   return (
     <div className='my-10 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'>
-      <TabCard tabData={tabData} />
+      {tabData.map(({ name, id, image, shoplist }) => (
+        <TabCard<ShopInfo> name={name} key={id} image={image} list={shoplist} />
+      ))}
       <FloatingActionButton />
     </div>
   )

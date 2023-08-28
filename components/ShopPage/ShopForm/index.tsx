@@ -2,7 +2,7 @@ import React from 'react'
 import { FormikErrors, FormikTouched } from 'formik/dist/types'
 import { FormFields, FormValues } from '@/components/ShopPage'
 import { fetchShopNameSuggestions } from '@/components/ShopPage/ShopForm/utils'
-import CreatableSelectInput from '@/components/Atoms/Inputs/CreatableSelect'
+import CreatableSelectInput from '@/components/molecules/Selects/CreatableSelect'
 
 interface Props {
   values: FormValues

@@ -1,4 +1,4 @@
-import { Option } from '@/components/Atoms/Inputs/inputTypes'
+import { Option } from '@/components/molecules/Inputs/inputTypes'
 
 export const createSuggestions = async <
   T extends { domain: string; name: string; logo: string }

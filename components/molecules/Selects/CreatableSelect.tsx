@@ -1,11 +1,15 @@
 import React, { useState } from 'react'
 import AsyncCreatableSelect from 'react-select/async-creatable'
 import { AutocompleteShops } from '@/components/ShopPage/ShopForm/utils'
-import { createSuggestions } from '@/components/Atoms/Inputs/utils'
+import { createSuggestions } from '@/components/molecules/Inputs/utils'
 import debounce from 'lodash.debounce'
-import { CSSObjectWithLabel } from 'react-select/dist/declarations/src/types'
 import { PlusCircleIcon } from '@heroicons/react/24/outline'
-import { AllowedInputNames, Option } from '@/components/Atoms/Inputs/inputTypes'
+import {
+  AllowedInputNames,
+  Option,
+} from '@/components/molecules/Inputs/inputTypes'
+import TextError from '@/components/Atoms/TextError'
+import { selectStyles } from '@/components/Atoms/Select/styles'
 
 interface Props {
   optionFn(inputValue: string): Promise<AutocompleteShops[]>
@@ -21,24 +25,6 @@ interface Props {
   error: string
   placeholder: string
   handleBlur(e: React.ChangeEvent<any>): void
-}
-
-const selectStyles = {
-  control: (baseStyles: CSSObjectWithLabel) => ({
-    ...baseStyles,
-    borderColor: 'initial',
-    boxShadow: 'none',
-    outline: 'none',
-    border: 'none',
-  }),
-  placeholder: (baseStyles: CSSObjectWithLabel) => ({
-    ...baseStyles,
-    color: 'rgb(5 23 38 / 0.5)',
-  }),
-  indicatorsContainer: (baseStyles: CSSObjectWithLabel) => ({
-    ...baseStyles,
-    display: 'none',
-  }),
 }
 
 const CustomOption = ({ innerProps, label, data }: any) => (
@@ -113,13 +99,7 @@ const CreatableSelectInput = ({
         onChange={handleSelectChange}
         components={{ Option: CustomOption }}
       />
-      <p
-        className={`mt-2 text-xs text-red-600 ${
-          error ? 'opacity-100' : 'h-4 opacity-0'
-        }`}
-      >
-        {error}
-      </p>
+      {error && <TextError className='-mt-4'>{error}</TextError>}
     </div>
   )
 }

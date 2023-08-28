@@ -1,8 +1,8 @@
 import React from 'react'
-import BackButton from '@/components/Atoms/Buttons/BackButton'
 import ProductPage from '@/components/ProductPage'
-import { Option } from '@/components/Atoms/Inputs/inputTypes'
+import { Option } from '@/components/molecules/Inputs/inputTypes'
 import { IProductWithPrice } from '@/app/types'
+import BackButton from '@/components/molecules/Buttons/BackButton'
 
 interface IProductEditPage {
   shops: Option[]

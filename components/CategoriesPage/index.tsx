@@ -3,12 +3,12 @@
 import React, { useState } from 'react'
 import { useFormik } from 'formik'
 import { categorySchema } from '@/lib/schemas/product'
-import SubmitButton from '@/components/Atoms/Buttons/SubmitButton'
 import { ToastContainer } from 'react-toastify'
 import PhotoPreview from '@/components/PhotoPreview'
 import { _post } from '@/lib/api/utils'
 import { handleResponse } from '@/lib/api/helpers'
 import CategoryForm from '@/components/CategoriesPage/CategoriesForm'
+import SubmitButton from '@/components/molecules/Buttons/SubmitButton'
 
 export interface FormValues {
   image: null | string
@@ -64,7 +64,7 @@ const CategoriesPage = () => {
         touched={touched}
         setGeneratedImages={setGeneratedImages}
       />
-      <SubmitButton isSubmitting={isSubmitting} styles='mr-10' />
+      <SubmitButton disabled={isSubmitting} className='mr-10' />
       <ToastContainer
         position='top-right'
         autoClose={5000}

@@ -1,6 +1,6 @@
 import React from 'react'
-import BackButton from '@/components/Atoms/Buttons/BackButton'
 import CategoriesPage from '@/components/CategoriesPage'
+import BackButton from '@/components/molecules/Buttons/BackButton'
 
 const NewCategory = () => {
   return (

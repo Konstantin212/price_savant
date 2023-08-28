@@ -1,8 +1,8 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
-import Tabs from '@/components/Tabs'
-import TabContent from '@/components/Tabs/TabContent'
+import Tabs from '@/components/templates/Tabs/Tab'
+import TabContent from '@/components/organisms/Tabs/TabContent'
 import { ToastContainer } from 'react-toastify'
 
 const itemsCounter = [0, 0, 0]
@@ -13,7 +13,7 @@ interface Props {
   categoriesLength: number
 }
 
-const Main: React.FC<Props> = ({
+const Home: React.FC<Props> = ({
   productsLength,
   shopsLength,
   categoriesLength,
@@ -56,4 +56,4 @@ const Main: React.FC<Props> = ({
   )
 }
 
-export default Main
+export default Home

@@ -3,12 +3,12 @@
 import React, { useState } from 'react'
 import { useFormik } from 'formik'
 import { shopSchema } from '@/lib/schemas/product'
-import SubmitButton from '@/components/Atoms/Buttons/SubmitButton'
 import { ToastContainer } from 'react-toastify'
 import ShopForm from '@/components/ShopPage/ShopForm'
 import PhotoPreview from '@/components/PhotoPreview'
 import { _post } from '@/lib/api/utils'
 import { handleResponse } from '@/lib/api/helpers'
+import SubmitButton from '@/components/molecules/Buttons/SubmitButton'
 
 export interface FormValues {
   image: null | string
@@ -60,7 +60,7 @@ const ShopPage = () => {
         errors={errors}
         touched={touched}
       />
-      <SubmitButton isSubmitting={isSubmitting} styles='mr-10' />
+      <SubmitButton disabled={isSubmitting} className='mr-10' />
       <ToastContainer
         position='top-right'
         autoClose={5000}
