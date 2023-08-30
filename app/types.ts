@@ -24,5 +24,4 @@ export interface IProductWithPrice extends Partial<Product> {
 
 export interface IUpdateProductPage {
   productData: IProductWithPrice
-  categoriesData: any
 }

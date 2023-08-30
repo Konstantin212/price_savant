@@ -1,7 +1,7 @@
 import { ShopsBase } from '@/lib/db/shops'
 import { CategoriesBase } from '@/lib/db/categories'
 import { OptionAdapter } from '@/lib/adapters/OptionAdapter'
-import { Category, Shop } from '@/types/interface'
+import { Category, CustomProductPrice, Shop } from '@/types/interface'
 import { ProductsBase } from '@/lib/db/products'
 import { PricesBase } from '@/lib/db/prices'
 import { IUpdateProductPage } from '@/app/types'
@@ -51,16 +51,16 @@ export const getProductDataWithPrice = async ({
 }): Promise<IUpdateProductPage | null> => {
   const product = await productsBase.getProduct(id)
 
-  if (!product) return null
-
   const data = await pricesBase.getProductPrice({
     productId: id,
     shopId,
   })
 
-  if (!data) return null
+  const priceData = data?.at(0)
 
-  const { category_id: categoryId, price } = data[0]
+  if (!product || !priceData) return null
+
+  const { category_id: categoryId, price } = priceData as CustomProductPrice
   const currencyAdapter = new CurrencyAdapter(price)
 
   const productData = {
@@ -72,5 +72,5 @@ export const getProductDataWithPrice = async ({
     shopId: shopId,
   }
 
-  return { productData, categoriesData: [] }
+  return { productData }
 }

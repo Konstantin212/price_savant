@@ -1,9 +1,8 @@
 import { Base } from '@/lib/db/BaseAbstraction'
-import { QueryResultRow, sql } from '@vercel/postgres'
+import { sql } from '@vercel/postgres'
 import { DBRequestError, handleError } from '@/lib/db/utils'
-import { Price } from '@/types/interface'
+import { CustomProductPrice, Price } from '@/types/interface'
 
-interface CustomProductPrice extends QueryResultRow, Price {}
 type ValidPricePropertyName = Partial<{ [key in keyof Price]: number }>
 
 export class PricesBase extends Base {
@@ -35,7 +34,7 @@ export class PricesBase extends Base {
     try {
       const { rows } =
         await sql`UPDATE prices SET price = ${values.price}, shop_id = ${values.shop_id}, category_id = ${values.category_id} WHERE product_id = ${productId} AND shop_id = ${values.shop_id}`
-      return rows[0] as CustomProductPrice
+      return rows.at(0) as CustomProductPrice
     } catch (e) {
       return handleError(e)
     }

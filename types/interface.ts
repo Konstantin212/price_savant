@@ -1,3 +1,5 @@
+import { QueryResultRow } from '@vercel/postgres'
+
 export interface DataService {
   id: number
   name: string
@@ -18,3 +20,5 @@ export interface Price {
   shop_id: number
   category_id: number
 }
+
+export interface CustomProductPrice extends QueryResultRow, Price {}
