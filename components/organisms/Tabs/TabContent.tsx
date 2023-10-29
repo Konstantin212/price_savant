@@ -6,7 +6,7 @@ import { _get } from '@/lib/api/utils'
 import { TabIndexes } from '@/types/enum'
 import { ShopInfo } from '@/mock/shopData'
 
-interface Props {
+export interface TabContentProps {
   activeTabId: number
 }
 
@@ -17,7 +17,7 @@ const getTabData = async (itemId: number) => {
   return data
 }
 
-const TabContent = ({ activeTabId }: Props) => {
+const TabContent: React.FC<TabContentProps> = ({ activeTabId }) => {
   const [tabData, setData] = useState<ProductData[]>([])
 
   useEffect(() => {

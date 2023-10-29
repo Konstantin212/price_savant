@@ -25,12 +25,19 @@ const Home: React.FC<Props> = ({
     setCounters([productsLength, shopsLength, categoriesLength])
   }, [productsLength, shopsLength, categoriesLength])
 
+  useEffect(() => {
+    fetch('http://localhost:8000/api/').then((data) => {
+      console.log('data')
+      console.log(data)
+    })
+  }, [])
+
   const handleTabClick = (id: number) => () => {
     setActiveTab(id)
   }
 
   return (
-    <div>
+    <>
       <Tabs
         handleTabClick={handleTabClick}
         activeTabId={activeTabId}
@@ -52,7 +59,7 @@ const Home: React.FC<Props> = ({
         pauseOnHover
         theme='light'
       />
-    </div>
+    </>
   )
 }
 

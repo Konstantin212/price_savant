@@ -4,7 +4,7 @@ import {
   getInitialData,
   getProductDataWithPrice,
 } from '@/app/products/new/utils'
-import ProductPageRoute from '@/pages/ProductPageRoute'
+import ProductPageRoute from '@/components/pages/ProductPageRoute/ProductPageRoute'
 
 export default async function ProductPage({
   params: { id },

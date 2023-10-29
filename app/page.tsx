@@ -7,19 +7,24 @@ export const dynamic = 'force-dynamic'
 
 export default async function HomePage() {
   const { shopData, categoriesData, productsData } = await getInitialData()
+
+  if (!shopData || !categoriesData || !productsData) return 'Error'
+
   const counters = [
-    productsData?.data?.[0]?.count,
-    shopData?.data?.[0]?.count,
-    categoriesData?.data?.[0]?.count,
+    productsData.data.at(0)?.count,
+    shopData.data.at(0)?.count,
+    categoriesData.data.at(0)?.count,
   ]
 
   if (counters.some((c) => !c)) return 'Error'
 
+  const [productLength, shopsLength, categoriesLength] = counters
+
   return (
     <Home
-      productsLength={counters[0]}
-      shopsLength={counters[1]}
-      categoriesLength={counters[2]}
+      productsLength={productLength}
+      shopsLength={shopsLength}
+      categoriesLength={categoriesLength}
     />
   )
 }

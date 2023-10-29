@@ -5,13 +5,13 @@ import TabControlTitle from '@/components/molecules/Tabs/TabControlTitle'
 interface Props {
   handleTabClick(id: number): (event: React.MouseEvent) => void
   activeTabId: number
-  itemsCounter: { [key: number]: number }
+  itemsCounter: Record<number, number>
   children: React.ReactElement
 }
 
 interface TabButtons {
   id: number
-  type?: 'button' | 'submit' | 'reset' | undefined
+  type?: 'button' | 'submit' | 'reset'
   title: string
 }
 
@@ -22,9 +22,9 @@ const tabButtons: TabButtons[] = [
 ]
 
 const Tabs = ({
+  itemsCounter,
   handleTabClick,
   activeTabId,
-  itemsCounter,
   children,
 }: Props) => {
   return (
